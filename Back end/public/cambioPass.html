@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Cambiar contraseña</title>
+  <style>
+    .fondo {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-image: var(--fondo-img);
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      z-index: -1;
+    }
+
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background: #f5f7fa;
+    }
+
+    .img-confirmada {
+      width: 220px;
+      height: auto;
+      margin: 10px auto 20px;
+      display: block;
+    }
+
+    .card {
+      background: white;
+      width: 90%;
+      max-width: 400px;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 10px;
+      margin: 10px 0;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+
+    .btn-aceptar {
+      position: relative;
+      background-color: rgba(0, 255, 36, 0.71);
+      color: black;
+      padding: 8px 25px;
+      border-radius: 10px;
+      font-weight: bold;
+      cursor: pointer;
+      border: none;
+      z-index: 1;
+      transition: transform 0.2s;
+    }
+
+    .btn-aceptar:hover {
+      opacity: 0.8;
+      transform: scale(1.05);
+    }
+
+    .btn-aceptar::before {
+      content: "";
+      position: absolute;
+      top: -6px;
+      left: -6px;
+      width: 100%;
+      height: 100%;
+      border: 2px solid black;
+      border-radius: 10px;
+      z-index: -1;
+      opacity: 0.9;
+    }
+
+    .btn-aceptar:disabled {
+      background-color: rgba(0, 255, 36, 0.71);
+      color: black;
+      transform: none;
+      opacity: 0.6;
+    }
+
+    .btn-aceptar:disabled::before {
+      border-color: black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <script src="main.js"></script>
+  <div class="fondo"></div>
+
+  <div class="card" id="cardForm">
+    <img id="imgNuevaPass" class="img-confirmada">
+
+    <input type="hidden" id="token">
+
+    <input type="password" id="nuevaPassword" placeholder="Nueva contraseña" required>
+    <input type="password" id="repetirPassword" placeholder="Repetir contraseña" required>
+
+    <button type="button" class="btn-aceptar" onclick="mostrarConfirmacion()">
+      Aceptar
+    </button>
+  </div>
+
+  <div class="card" id="cardConfirmar" style="display:none;">
+    <img id="imgConfirmada" class="img-confirmada">
+
+    <p>Se ha actualizado su contraseña.</p>
+
+    <!--form method="POST" action="/api/recuperarPass/cambiar-contrasena"-->
+    <form id="formCambiarPass" method="POST">
+      
+      <input type="hidden" name="token" id="tokenFinal">
+      <input type="hidden" name="nuevaPassword" id="passFinal">
+      <input type="hidden" name="repetirPassword" id="passFinal2">
+
+      <button type="submit" class="btn-aceptar">
+        Confirmar
+      </button>
+    </form>
+  </div>
+
+  <script>
+    const appPuerto = "/repositorio-necesidades-2026-2027/";
+    //const appPuerto = "/";
+    const img = document.getElementById("imgNuevaPass");
+    img.src = appPuerto + "assets/NuevaPass.png";
+
+    //CuentaConfirmada
+    const img2 = document.getElementById("imgConfirmada");
+    img2.src = appPuerto + "assets/CuentaConfirmada.png";
+
+    //redireccion 
+    const form = document.getElementById("formCambiarPass");
+    form.action = appPuerto + "api/recuperarPass/cambiar-contrasena";
+
+    //fondo
+    document.documentElement.style.setProperty(
+      "--fondo-img",
+      `url('${appPuerto}assets/Fondo.png')`
+    );
+
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    document.getElementById("token").value = token;
+
+    function mostrarConfirmacion() {
+      const pass1 = document.getElementById("nuevaPassword").value;
+      const pass2 = document.getElementById("repetirPassword").value;
+
+      if (!pass1 || !pass2) {
+        alert("Completa todos los campos");
+        return;
+      }
+
+      if (pass1 !== pass2) {
+        alert("Las contraseñas no coinciden");
+        return;
+      }
+
+      document.getElementById("tokenFinal").value = token;
+      document.getElementById("passFinal").value = pass1;
+      document.getElementById("passFinal2").value = pass2;
+
+      document.getElementById("cardForm").style.display = "none";
+      document.getElementById("cardConfirmar").style.display = "block";
+    }
+  </script>
+
+</body>
+
+</html>

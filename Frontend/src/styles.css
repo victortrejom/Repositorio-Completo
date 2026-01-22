@@ -1,0 +1,138 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+body {
+  background: none;
+}
+
+.footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+
+  width: 100%;
+  padding: 10px 20px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background: transparent;
+  color: white;
+  font-size: 14px;
+  line-height: 1.3;
+
+  z-index: 9999;
+
+  pointer-events: none; /* evita que el footer bloquee cosas */
+}
+
+.footer-left {
+  text-align: left;
+  pointer-events: auto;
+  cursor: pointer;
+  font-size: 20px;
+  text-decoration: underline;
+}
+
+.footer-right {
+  text-align: right;
+  margin-right: 2rem;
+}
+
+.btn-aceptar {
+  position: relative;
+  background-color: rgba(0, 255, 36, 0.71);
+  color: black;
+  padding: 8px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  z-index: 1;
+  transition: transform 0.2s;
+}
+
+.btn-aceptar:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.btn-aceptar::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+.btn-aceptar:disabled {
+  background-color: rgba(0, 255, 36, 0.71);
+  color: black;
+  transform: none;
+  opacity: 0.6; 
+}
+
+.btn-aceptar:disabled::before {
+  border-color: black; 
+}
+
+
+.btn-cancelar {
+  position: relative;
+  background-color: rgba(255, 194, 0, 0.71);
+  color: black;
+  padding: 8px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  z-index: 1;
+  transition: transform 0.2s;
+}
+
+.btn-cancelar:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.btn-cancelar::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+.avisos {
+  width: 60%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+  position: absolute;
+  top: -5%;
+  right: 0;       
+  margin-left: 0;  
+  z-index: 1;
+}
+.swal2-actions {
+  gap: 15px !important; 
+}
+.swal-img-small {
+  width: 80px !important;
+}

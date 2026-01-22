@@ -1,0 +1,102 @@
+    <app-navbar></app-navbar>
+    <app-aviso-home></app-aviso-home>
+
+
+    @if(showModal){
+        <app-nueva-necesidad
+            [isOpen]="showModal"
+            (close)="closeModal()"
+            >
+        </app-nueva-necesidad>
+    }
+
+    @if(showModalSumate){
+    <app-sumate-necesidad
+        [isOpen2]="showModalSumate"
+        (close)="closeModalSumate()"
+        >
+    </app-sumate-necesidad>
+    }
+
+    <div class="fondo">
+        
+        <img src="assets/Home.png" class="bg-img" alt="">
+
+        <!-- Sección superior -->
+        <div class="seccion-opciones">
+            <img src="assets/NuevaNecesidad.png" class="boton-imagen" (click)="openModal()" alt="Nueva necesidad">
+            <img src="assets/SumateNecesidad.png" class="boton-imagen" (click)="openModalSumate()" alt="Súmate a una necesidad">
+        </div>
+
+        <!-- CONTENEDOR DE BANNERS -->
+        <div class="banner-wrapper">
+
+            <!-- BANNER 1 -->
+            <section id="banner1" class="banner-oscuro" [ngClass]="{ 'active': currentBanner === 1 }">
+
+                <!-- SOLO BOTÓN DERECHA -->
+                <button class="btn-banner btn-next" *ngIf="currentBanner === 1" (click)="nextBanner()">
+                    &#9654;
+                </button>
+
+                <div class="banner-inner">
+
+                    <div class="panel panel-left">
+                        <div class="panel-content">
+                            <h4>Izquierda 1</h4>
+                            <p>Texto breve o mini-card del banner 1.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-center">
+                        <div class="panel-content video-wrapper"></div>
+                    </div>
+
+                    <div class="panel panel-right">
+                        <div class="panel-content">
+                            <h4>Derecha 1</h4>
+                            <p>Más contenido del banner 1.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- BANNER 2 -->
+            <section id="banner2" class="banner-oscuro" [ngClass]="{ 'active': currentBanner === 2 }">
+
+                <!-- SOLO BOTÓN IZQUIERDA -->
+                <button class="btn-banner btn-prev" *ngIf="currentBanner === 2" (click)="prevBanner()">
+                    &#9664;
+                </button>
+
+                <div class="banner-inner">
+
+                    <div class="panel panel-left">
+                        <div class="panel-content">
+                            <h4>Izquierda 2</h4>
+                            <p>Contenido alterno del banner 2.</p>
+                        </div>
+                    </div>
+
+                    <div class="panel panel-center2">
+                        <div class="panel-content video-wrapper"></div>
+                    </div>
+
+                    <div class="panel panel-center2">
+                        <div class="panel-content video-wrapper"></div>
+                    </div>
+
+                    <div class="panel panel-right">
+                        <div class="panel-content">
+                            <h4>Derecha 2</h4>
+                            <p>Más contenido para banner 2.</p>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+
+    </div>

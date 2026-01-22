@@ -1,0 +1,27 @@
+<nav class="navbar-custom">
+  <!-- IZQUIERDA: LOGO -->
+  <div class="nav-left">
+    <img src="assets/Logo.png" class="logo" alt="Logo IECDMX">
+    <button *ngIf="showNav3" class="btn-preguntas" (click)="verPreguntas()">Preguntas Frecuentes</button>
+  </div>
+
+  <!-- DERECHA: BIENVENIDA + BOTÓN -->
+  <div class="nav-right" *ngIf="showNav">
+    <div class="bienvenida">
+      <span class="titulo">Bienvenido:</span><br>
+      <span class="usuario">{{this.nombreUser}}</span>
+    </div>
+
+    <button class="btn-cerrar" (click)="logout()">Cerrar sesión</button>
+  </div>
+
+  <!-- DERECHA: BIENVENIDA + BOTÓN -->
+  <div class="nav-right2" *ngIf="showNav2">
+    <div class="bienvenida">
+      <span class="titulo">Para registrar una problematica en tu colonia, puedes:</span><br>
+    </div>
+
+    <button class="btn-cancelarOut" (click)="logout()">Ingresar o Registrarme</button>
+  </div>
+</nav>
+

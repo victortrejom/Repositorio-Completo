@@ -1,0 +1,153 @@
+<div class="modal fade" id="modalRecuperar" tabindex="-1">
+  <div class="modal-dialog">
+    <div class="modal-content">
+        <img src="assets/RecuperaPass.png" class="recupera" alt="otra">
+
+        <div></div>
+
+      <form [formGroup]="formRecuperar" (ngSubmit)="enviarRecuperacion()">
+        <div class="modal-body">
+            <br>
+
+          <label>Correo electrónico:</label>
+          <input type="email"
+                 formControlName="correo"
+                 class="form-control"
+                 placeholder="correo@dominio.com">
+        </div>
+
+        <div class="container text-center">
+            <div class="row justify-content-center">
+                <div class="col-5">
+                    <button class="btn-aceptar" type="submit"  [disabled]="formRecuperar.invalid" data-bs-dismiss="modal">
+                        Enviar correo
+                    </button>
+                </div>
+                <div class="col-4">
+                    <button class="btn-cancelar" type="button" (click)="cancelar()" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<!--  confirmacion de correo electrónico   -->
+<div class="modal fade" id="modalConfirmarCorreo" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-container">
+      <img src="assets/ConfirmaCorreo.png" class="confirma-correo" alt="imagen">
+      <div class="modal-body">
+        <label class="texto-correo">
+          Se ha enviado una confirmación a la dirección de correo registrado,
+          revisa tu bandeja de entrada.
+        </label>
+      </div>
+      <hr>
+      <div class="container text-center">
+          <div class="row justify-content-center">
+            <div class="col-6">
+                <button class="btn-aceptar" type="button" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!--  Recuperar contraseña   -->
+<div class="modal fade" id="modalRecuperaContrasenia" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-container">
+      <img src="assets/RecuperaPass.png" class="confirma-correo" alt="imagen">
+      <div class="modal-body">
+        <label class="texto-correo">
+          Se ha enviado una confirmación a la dirección de correo registrado,
+          revisa tu bandeja de entrada.
+        </label>
+      </div>
+      <hr>
+      <div class="container text-center">
+          <div class="row justify-content-center">
+            <div class="col-6">
+                <button class="btn-aceptar" type="button" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Recuperar contraseña  No existe correo -->
+<div class="modal fade" id="modalRecuperaContraseniaVacio" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-container">
+      <img src="assets/CuentaNoEncontrada.png" class="confirma-correo" alt="imagen">
+      <div class="modal-body">
+        <label class="texto-correo">
+          Esta cuenta de correo no se encuentra 
+          registrada, verifica su direccion de correo 
+          electrónico.
+        </label>
+      </div>
+      <hr>
+      <div class="container text-center">
+          <div class="row justify-content-center">
+            <div class="col-6">
+                <button class="btn-aceptar" type="button" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Cuenta no encontrada -->
+<div class="modal fade" id="modalCuentaNoEncontrada" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-container">
+      <img src="assets/CuentaNoEncontrada.png" class="confirma-correo" alt="imagen">
+      <div class="modal-body">
+        <label class="texto-correo">
+          Esta cuenta de correo no se encuentra registrada, verifica su direccion de correo
+          electrónico.
+        </label>
+      </div>
+      <hr>
+      <div class="container text-center">
+          <div class="row justify-content-center">
+            <div class="col-6">
+                <button class="btn-aceptar" type="button" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!--  Cuenta no activa -->
+<div class="modal fade" id="modalCuentaNoActiva" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content modal-container">
+      <img src="assets/NoActiva.png" class="confirma-correo" alt="imagen">
+      <div class="modal-body">
+        <label class="texto-correo">
+          Esta cuenta de correo no ha sido activada,
+          verifique su bandeja de entrada y active 
+          su cuenta.
+        </label>
+      </div>
+      <hr>
+      <div class="container text-center">
+          <div class="row justify-content-center">
+            <div class="col-6">
+                <button class="btn-aceptar" type="button" data-bs-dismiss="modal">Aceptar</button>
+            </div>
+          </div>
+      </div>
+    </div>
+  </div>
+</div>

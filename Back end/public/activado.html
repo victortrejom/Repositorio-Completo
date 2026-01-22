@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cuenta Activada</title>
+    <style>
+        .fondo {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            z-index: -1;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, Helvetica, sans-serif;
+            background: #f5f7fa;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .btn-aceptar {
+            position: relative;
+            background-color: rgba(0, 255, 36, 0.71);
+            color: black;
+            padding: 8px 25px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            border: none;
+            z-index: 1;
+            transition: transform 0.2s;
+            text-decoration: none;
+            /* para que se vea como botón */
+        }
+
+        .btn-aceptar:hover {
+            opacity: 0.8;
+            transform: scale(1.05);
+        }
+
+        .btn-aceptar::before {
+            content: "";
+            position: absolute;
+            top: -6px;
+            left: -6px;
+            width: 100%;
+            height: 100%;
+            border: 2px solid black;
+            border-radius: 10px;
+            z-index: -1;
+            opacity: 0.9;
+        }
+
+        .btn-aceptar:disabled {
+            background-color: rgba(0, 255, 36, 0.71);
+            color: black;
+            transform: none;
+            opacity: 0.6;
+        }
+
+        .btn-aceptar:disabled::before {
+            border-color: black;
+        }
+
+        .img-confirmada {
+            width: 220px;
+            height: auto;
+            margin: 10px auto 20px;
+            display: block;
+        }
+
+        .card {
+            width: 400px;
+            padding: 25px;
+            margin: 60px auto;
+            background: white;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+            font-family: Arial, Helvetica, sans-serif;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="fondo"></div>
+    <div class="card">
+
+        <img id="imgNueva" class="img-confirmada">
+
+        <p>
+            Se ha activado su cuenta, inicie sesión con su<br>
+            dirección de correo electrónico y contraseña.
+        </p>
+
+        <hr>
+        <a id="btnAceptar" class="btn-aceptar">Aceptar</a>
+    </div>
+
+    <script src="/env.js"></script>
+    <script>
+        const appPuerto = "/repositorio-necesidades-2026-2027/";
+        //const appPuerto = "/";
+        const img = document.getElementById("imgNueva");
+        img.src = appPuerto + "assets/CuentaConfirmada.png";
+
+        //fondo
+        document.documentElement.style.setProperty(
+        "--fondo-img",
+        `url('${appPuerto}assets/Fondo.png')`
+        );
+        
+        //document.getElementById("btnAceptar").href = window.URL_FRONT + "/";
+        document.getElementById("btnAceptar").href = "/repositorio-necesidades-2026-2027/";
+
+    </script>
+
+</body>
+
+</html>

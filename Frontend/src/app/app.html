@@ -1,0 +1,19 @@
+<router-outlet />
+<app-recuperar-contrasena></app-recuperar-contrasena>
+
+<footer class="footer">
+
+  <div class="footer-left">
+    <span *ngIf="showRecuperar" (click)="recuperaPass()" class="recuperar">
+      ¿Olvidaste tu contraseña?
+    </span>
+  </div>
+
+  <div class="footer-right">
+    Instituto Electoral de la Ciudad de México ©<br>
+    Huizaches 25, Rancho Los Colorines, Tlalpan, C.P. 14386, Ciudad de México.<br>
+    Conmutador (55) 54833 380
+  </div>
+
+</footer>
+

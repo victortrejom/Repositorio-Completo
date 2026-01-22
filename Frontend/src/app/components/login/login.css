@@ -1,0 +1,319 @@
+:host {
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+/* CARD ARRIBA A LA DERECHA */
+.card-necesidades {
+  position: absolute;   
+  top: 5%;              
+  right: 5%;            
+
+  width: 22vw;
+  min-width: 250px;
+  max-width: 520px;
+
+  border-radius: 12px;
+  border-color: transparent;
+  background: transparent;
+}
+
+/* IMAGEN RESPONSIVA DENTRO DE LA CARD */
+.card-necesidades .card-img-top {
+  width: 80%;
+  height: auto;
+  object-fit: contain;
+  display: block;      /* Necesario para que margin funcione */
+  margin-left: auto;   /* Empuja la imagen hacia la derecha */
+}
+
+/* Texto */
+.card-text {
+  position: relative; /* Necesario para el borde desfasado */
+  font-size: 19px;
+  text-align: right;
+  color: white;
+  background: rgba(0, 255, 36, 0.41);
+  border-radius: 12px;
+  padding: 20px 25px;
+  z-index: 2; /* Asegura que el texto quede encima */
+}
+
+/* Contorno blanco desfasado */
+.card-text::before {
+  content: "";
+  position: absolute;
+  top: -16px;   /* Ajusta para el desfase */
+  left: -18px;
+  width: 100%;
+  height: 100%;
+  border: 3px solid white;
+  border-radius: 12px;
+  z-index: -1; /* Se coloca debajo del texto */
+  opacity: 0.9; /* Similar al ejemplo */
+}
+
+
+.clic-aqui {
+  text-decoration: underline;
+  font-weight: bold;
+  cursor: pointer;          /* Hace que parezca botón */
+  color: white;             /* Mantiene el color del texto */
+  transition: 0.2s ease-in-out;
+}
+
+.clic-aqui:hover {
+  color: #eaffea;           /* Un blanco más intenso */
+  text-decoration-thickness: 3px;
+  transform: scale(1.05);   /* Pequeño zoom al pasar el mouse */
+}
+
+/* CARD INICIO DE SESION */
+.card-inicio-sesion {
+  position: absolute;
+  bottom: 21%;
+  left: 5%;
+
+  width: 582vw;   /* AUMENTAMOS EL TAMAÑO TOTAL */
+  min-width: 350px;
+  max-width: 520px;
+
+  border-radius: 12px;
+  border-color: transparent;
+  background: transparent;
+}
+
+/* Imagen dentro de la card */
+.card-inicio-sesion .card-img-top {
+  width: 60%;
+  height: auto;
+  object-fit: contain;
+}
+
+/* INPUTS MÁS LARGOS */
+.card-inicio-sesion .form-control {
+  width: 100%;          /* ocupa todo el ancho */
+  height: 35px;         /* input más alto / bonito */
+  border-radius: 25px;  /* estilo redondeado */
+  font-size: 18px;      /* texto más grande */
+  padding-left: 20px;
+}
+
+/* SEGUNDO INPUT MÁS A LA DERECHA */
+.pass-input {
+  margin-left: 45px;     /* mueve el input hacia la derecha */
+  width: calc(100% - 20px); /* evita que se descuadre */
+}
+
+.btn-ingresar {
+  position: relative;
+  background-color: rgba(0, 255, 36, 0.41);
+  margin-left: 5rem;
+  color: white;
+  padding: 8px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  z-index: 1;
+  transition: transform 0.2s, opacity 0.2s;
+}
+
+/* HOVER SOLO CUANDO NO ESTÁ DESHABILITADO */
+.btn-ingresar:not(:disabled):hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+/* BORDE */
+.btn-ingresar::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+/* 🔥 ESTILO VISUAL CUANDO ESTÁ DESHABILITADO */
+.btn-ingresar:disabled {
+  opacity: 0.4 !important;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* 🔥 BORDE SUAVIZADO CUANDO DESHABILITADO */
+.btn-ingresar:disabled::before {
+  opacity: 0.3;
+  border-color: #ddd;
+}
+
+.btn-registrarme {
+  position: relative;   /* Necesario para que ::before se posicione respecto al botón */
+  background-color: #9360AD; /* Fondo con 41% de opacidad */
+  margin-left: 5rem;
+  color: white;
+  padding: 8px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;         /* Quitamos el borde normal */
+  z-index: 1;           /* Asegura que el botón quede encima del borde */
+  transition: transform 0.2s;
+}
+
+.btn-registrarme:hover {
+  opacity: 0.8;
+  transform: scale(1.05); /* Opcional: efecto hover */
+}
+
+/* Borde desfasado */
+.btn-registrarme::before {
+  content: "";
+  position: absolute;
+  top: -6px;            /* Ajusta el desfase vertical */
+  left: -6px;           /* Ajusta el desfase horizontal */
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: -1;          /* Coloca el borde debajo del botón */
+  opacity: 0.9;
+}
+
+.botones-centrados {
+  display: flex;           /* Activamos flexbox */
+  justify-content: center; /* Centra horizontalmente */
+  gap: 15px;               /* Espacio entre los botones */
+  margin-top: 20px;        /* Opcional: espacio superior */
+}
+
+/*MODAL*/
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: white;
+  padding: 20px 30px;
+  border-radius: 12px;
+  width: 400px;
+  max-width: 90%;
+  position: relative;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+
+/* Formulario */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-container {
+  position: relative;
+  background: white;
+  border-radius: 15px;
+  padding: 30px 25px;
+  width: 400px;
+  max-width: 90%;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  font-family: Arial, sans-serif;
+}
+
+.modal-title {
+  text-align: right;
+  color: #242477;
+  font-size: 24px;
+  margin-bottom: 20px;
+}
+
+.modal-container label {
+  display: block;
+  margin-top: 15px;
+  font-size: 14px;
+  color: #333;
+}
+
+.modal-container input[type="text"],
+.modal-container input[type="email"],
+.modal-container input[type="password"] {
+  width: 100%;
+  padding: 8px 10px;
+  margin-top: 5px;
+  border: 1px solid #aaa;
+  border-radius: 8px;
+  font-size: 14px;
+  box-sizing: border-box;
+}
+
+.checkbox-container {
+  margin-top: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.checkbox-container input[type="checkbox"] {
+  margin-right: 8px;
+}
+
+.link-privacidad {
+  text-decoration: underline;
+  cursor: pointer;
+}
+
+.modal-container button {
+  margin-top: 20px;
+  width: 100%;
+  padding: 10px 0;
+  border: none;
+  border-radius: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.modal-container .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 24px;
+  cursor: pointer;
+  color: #555;
+}
+
+.bg-img {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}

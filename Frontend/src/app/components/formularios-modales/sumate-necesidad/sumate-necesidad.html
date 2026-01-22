@@ -1,0 +1,174 @@
+<div class="modal show fade d-block" tabindex="-1" *ngIf="isOpen2" style="background: rgba(0,0,0,0.5);">
+    <div class="modal-dialog modal-dialog-centered modal-xxl">
+        <div class="modal-content modal-sumate">
+
+            @if(!estado)
+            {
+
+            <img src="assets/SumateNecesidad2.png" class="imagen" alt="header">
+
+            }
+
+
+            <div class="modal-body">
+                <form [formGroup]="formularioRegistro!">
+
+                    @if(estado){
+                    <div class="row g-3 filtros-row">
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Alcaldía</label>
+                            <select class="form-select flex-grow-1" formControlName="alcaldia"
+                                (change)="onChangeAlcaldia()">
+                                <option value="" selected>Seleccione una opción</option>
+                                @for (item of catalogoAlcaldia; track item) {
+                                <option [value]="item.id">{{item.demarcacion_territorial}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Unidad Territorial</label>
+                            <select class="form-select" formControlName="ut" (change)="onChangeUT($event)">
+                                <option value="" selected>Seleccione una opción</option>
+                                @for (item of catalogoUT; track item) {
+                                <option [value]="item.id">{{item.unidad_territorial}}</option>
+                                }
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="row g-3 filtros-row">
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Ordenar por</label>
+
+                            <select formControlName="ordenar" class="form-control" (change)="ordenarVotos($event)">
+                                <option [ngValue]="null">Selecciona</option>
+                                <option [ngValue]="1">Mas apoyos</option>
+                                <option [ngValue]="2">Más recientes</option>
+                                <option [ngValue]="3">A - Z</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Palabra Clave</label>
+
+                            <input class="form-control" placeholder="Buscar..." (input)="filtrarPorPalabra($event)">
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-center">
+                            <button type="button" class="btn-aceptar" (click)="limpiarFiltros()">
+                                Limpiar
+                            </button>
+                        </div>
+
+                    </div>
+
+                    }
+
+                    @if(!estado){
+                    <div class="row g-3 filtros-row">
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Unidad Territorial</label>
+                            <select class="form-select" formControlName="ut" (change)="onChangeUT($event)">
+                                <option value="" selected>Seleccione una opción</option>
+                                @for (item of catalogoUT; track item) {
+                                <option [value]="item.id">{{item.unidad_territorial}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Palabra Clave</label>
+
+                            <input class="form-control" placeholder="Buscar..." (input)="filtrarPorPalabra($event)">
+                        </div>
+
+
+                    </div>
+
+                    <div class="row g-3 filtros-row">
+
+                        <div class="col-md-6 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Categoría</label>
+                            <select class="form-select" class="form-select flex-grow-1" formControlName="catUno"
+                                (change)="onChangeCat($event)">
+                                <option value="" selected>Seleccione una opción</option>
+                                @for (item of primerCAt; track item) {
+                                <option [value]="item.id">{{item.primera_categoria}}</option>
+                                }
+                            </select>
+                        </div>
+
+                        <div class="col-md-4 d-flex align-items-center">
+                            <label class="form-label me-3 lbl-fijo">Ordenar por</label>
+
+                            <select formControlName="ordenar" class="form-control" (change)="ordenarVotos($event)">
+                                <option [ngValue]="null">Selecciona</option>
+                                <option [ngValue]="1">Mas apoyos</option>
+                                <option [ngValue]="2">Más recientes</option>
+                                <option [ngValue]="3">A - Z</option>
+                            </select>
+                        </div>
+
+                        <div class="col-md-2 d-flex align-items-center">
+                            <button type="button" class="btn-aceptar" (click)="limpiarFiltros()">
+                                Limpiar
+                            </button>
+                        </div>
+
+                    </div>
+                    }
+
+                    <div class="table-container">
+                        <table class="table tabla-necesidades">
+                            <thead>
+                                <tr>
+                                    <th class="col-titulo">Título</th>
+                                    <th class="col-descripcion">Descripción</th>
+                                    <th class="col-categoria">Categoría</th>
+                                    <th class="col-votos">Contador de Apoyos</th>
+                                    <th *ngIf="tipo_usuario == 1">Apoyar</th>
+                                    <th *ngIf="tipo_usuario !== 1">Visualizar</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr *ngFor="let item of allDatable">
+                                    <td class="col-titulo">{{ item.titulo_necesidad }}</td>
+                                    <td class="col-descripcion">{{ item.descripcion_necesidad }}</td>
+                                    <td class="col-categoria">{{ item.categoria }}</td>
+                                    <td class="col-votos">{{ item.total_votos }}</td>
+                                    <td class="apoyar-btn">
+                                        <button *ngIf="tipo_usuario === 1" class="btn-votar-pulse"
+                                            (click)="votar(item.id_necesidad)">
+                                            +
+                                        </button>
+                                        <button *ngIf="tipo_usuario !== 1" class="btn-ver"
+                                            (click)="soloVer(item.id_necesidad)">
+                                            👁
+                                        </button>
+                                    </td>
+
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="text-end">
+                        <button class="btn-cancelar" data-bs-dismiss="modal" (click)="cancelar()">Cerrar</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@if(showModal){
+<app-nueva-necesidad [isOpen]="showModal" [idNecesidad]="idSeleccionado" (close)="closeModal()">
+</app-nueva-necesidad>
+}

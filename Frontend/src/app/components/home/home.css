@@ -1,0 +1,135 @@
+/**/
+/* Contenedor general en columna */
+/* Capa de fondo */
+.bg-img {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* Layout original (NO tocar flex ni padding) */
+.fondo {
+  position: relative;          /* 🔑 para no romper el layout */
+  width: 100vw;
+  height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  padding-top: 8vh;
+  padding-bottom: 0;
+}
+
+
+/* Sección superior */
+.seccion-opciones {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8vw; /* se adapta al zoom sin deformarse */
+  background: rgba(0, 0, 0, 0.55);
+  padding: 2vh 0;
+}
+
+/* Botones */
+.boton-imagen {
+  width: 295px;          
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.boton-imagen:hover {
+  transform: scale(1.1);
+  filter: brightness(1.2);
+}
+
+
+/* Paneles */
+.banner-inner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  width: 100%;
+}
+
+.panel-center{
+  width: 60vh;
+  height: 40vh;          /* altura relativa a la ventana */
+  max-height: 350px;     /* no crecer demasiado en pantallas grandes */
+  min-height: 200px;     /* no quedar demasiado pequeño en pantallas pequeñas */
+}
+
+/* Paneles responsivos ajustados */
+.panel-left, .panel-right, .panel-center2 {
+  width: 50vh;
+  height: 40vh;          /* altura relativa a la ventana */
+  max-height: 350px;     /* no crecer demasiado en pantallas grandes */
+  min-height: 200px;     /* no quedar demasiado pequeño en pantallas pequeñas */
+}
+
+/* Panel contenido sigue igual */
+.panel {
+  background: white;
+  border-radius: 10px;
+  padding: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 2em;
+}
+
+
+
+
+/* ===================================== */
+/* AQUI COMIENZA EL CSS NUEVO DEL SLIDER */
+/* ===================================== */
+/* Wrapper relativo */
+.banner-wrapper {
+  position: relative;
+  width: 100%;
+  min-height: 470px; /* altura mínima para que el banner sea visible */
+  margin-top: 2vh;   /* separación con seccion-opciones */
+}
+
+.banner-oscuro {
+  position: absolute;   /* ahora sí llega al fondo */    
+  top: calc(10px); /* altura de seccion-opciones + padding extra */
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.55);
+  padding: 40px 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.6s ease;
+}
+
+
+.banner-oscuro.active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* BOTONES DENTRO DEL BANNER */
+.btn-banner {
+  position: absolute;
+  top: 40%;                    /* SUBIDO */
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.7);
+  border: none;
+  font-size: 2rem;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 50%;
+  z-index: 20;
+  transition: 0.2s;
+}
+
+.btn-prev { left: 20px; }
+.btn-next { right: 20px; }
