@@ -39,7 +39,6 @@
   filter: brightness(1.1);
 }
 
-
 /* PANEL DE TABS (IZQUIERDA) */
 .panel-tabs {
   width: 240px;
@@ -87,7 +86,6 @@
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-
 
 /* WRAPPER */
 .chart-wrapper {

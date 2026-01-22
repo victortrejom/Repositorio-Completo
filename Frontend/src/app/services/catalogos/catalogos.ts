@@ -18,8 +18,6 @@ export class Catalogos {
     .pipe(catchError((error: HttpErrorResponse) => {return throwError(() => error);}));
   };
 
-
-
   getCatalogoUT(id: number): Observable<any> {
 
     const params = new HttpParams()
@@ -55,5 +53,4 @@ export class Catalogos {
     return this.http.get(this.apiUrl + '/catalogos/getTercerCategoria', {params})
       .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
   }
-
 }

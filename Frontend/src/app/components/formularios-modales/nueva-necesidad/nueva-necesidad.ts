@@ -89,9 +89,7 @@ export class NuevaNecesidadComponent implements OnInit {
       this.formularioRegistro.get('titulo')?.disable();
       this.formularioRegistro.get('descripcion')?.disable();
       this.formularioRegistro.get('folio')?.disable();
-    } else {
-    }
-
+    } 
   }
 
   onChangeAlcaldia() {
@@ -120,8 +118,6 @@ export class NuevaNecesidadComponent implements OnInit {
       const id = Number(control.value);
       this.getSegundaCategoriaT(id);
     }
-
-
   }
 
   onChangeCatDos() {
@@ -187,7 +183,6 @@ export class NuevaNecesidadComponent implements OnInit {
       }
     });
   }
-
 
   getSegundaCategoriaT(id: number) {
     this.catalogos.getSegundaCategoria(id).subscribe({
@@ -337,7 +332,6 @@ export class NuevaNecesidadComponent implements OnInit {
     }
   }
 
-
   cancelar() {
     this.formularioRegistro.reset();
     this.close.emit();
@@ -361,7 +355,6 @@ export class NuevaNecesidadComponent implements OnInit {
     this.cd.detectChanges();
   }
 
-
   modalAviso() {
     const modalElement = document.getElementById('modalAvisoHome');
     if (modalElement) {
@@ -383,7 +376,6 @@ export class NuevaNecesidadComponent implements OnInit {
       modal.show();
     }
   }
-
 
   getRegistros(idNecesidad: number) {
     this.isUpdate = true;
@@ -444,6 +436,4 @@ export class NuevaNecesidadComponent implements OnInit {
       error: (err) => console.error('Error al descargar archivo:', err)
     });
   }
-
 }
-

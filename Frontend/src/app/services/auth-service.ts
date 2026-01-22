@@ -15,38 +15,19 @@ export class AuthService {
   private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient, private router: Router) {}
-/*
-  login(correo_electronico: string, password: string): Observable<any> {
+
+  login(correo_electronico: string, password: string, captchaToken: string): Observable<any> {
 
     const hashedPassword = sha256(password);
 
     const body = {
       correo_electronico,
-      password: hashedPassword
+      password: hashedPassword,
+      captchaToken   // ← AGREGAR ESTO
     };
 
-    return this.http.post(this.apiUrl + '/login/login', body)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(() => error);
-        })
-      );
+    return this.http.post(this.apiUrl + '/login/login', body);
   } 
-   */ 
-
-  login(correo_electronico: string, password: string, captchaToken: string): Observable<any> {
-
-  const hashedPassword = sha256(password);
-
-  const body = {
-    correo_electronico,
-    password: hashedPassword,
-    captchaToken   // ← AGREGAR ESTO
-  };
-
-  return this.http.post(this.apiUrl + '/login/login', body);
-} 
-
 
   logout() {
     sessionStorage.removeItem('token');

@@ -12,8 +12,7 @@ export class RegistroUsuarios {
 
   constructor(private http: HttpClient) { }
 
-   guardar(data: any): Observable<any> {
-
+  guardar(data: any): Observable<any> {
     return this.http.post(this.apiUrl + '/registro/nuevo', data)
       .pipe(
         catchError((error: HttpErrorResponse) => {
@@ -26,5 +25,4 @@ export class RegistroUsuarios {
   guardar2(datos: any): Observable<any> {
     return this.http.post(this.apiUrl, datos);
   }
-
 }

@@ -13,53 +13,51 @@ export class PreguntasFrecuentes {
   
   constructor(private location: Location) {}
 
-usuSistema() {
-  const destino = document.getElementById('usoSistema');
+  usuSistema() {
+    const destino = document.getElementById('usoSistema');
 
-  if (destino) {
-    destino.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (destino) {
+      destino.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   }
-}
 
-sobreNecesidad(){
-  const destino = document.getElementById('sobreNecesidad');
+  sobreNecesidad(){
+    const destino = document.getElementById('sobreNecesidad');
 
-  if (destino) {
-    destino.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (destino) {
+      destino.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   }
-}
 
-siguientesPasos(){
-  const destino = document.getElementById('siguientesPasos');
+  siguientesPasos(){
+    const destino = document.getElementById('siguientesPasos');
 
-  if (destino) {
-    destino.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (destino) {
+      destino.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   }
-}
 
-participativo(){
-  const destino = document.getElementById('participativo');
+  participativo(){
+    const destino = document.getElementById('participativo');
 
-  if (destino) {
-    destino.scrollIntoView({
-      behavior: 'smooth',
-      block: 'start'
-    });
+    if (destino) {
+      destino.scrollIntoView({
+        behavior: 'smooth',
+        block: 'start'
+      });
+    }
   }
-}
 
   regresar() {
     this.location.back(); // Esto regresa a la página anterior
   }
-
-
 }

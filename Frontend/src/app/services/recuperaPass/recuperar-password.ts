@@ -13,16 +13,13 @@ export class RecuperarPassword {
   constructor(private http: HttpClient) { }
   recuperarPassword(correo: string): Observable<any> {
 
-  const body = { correo };
+    const body = { correo };
 
-  return this.http.post(this.apiUrl + '/recuperarPass/recuperar', body)
-    .pipe(
-      catchError((error: HttpErrorResponse) => {
-        return throwError(() => error);
-      })
-    );
-}
-
-
-
+    return this.http.post(this.apiUrl + '/recuperarPass/recuperar', body)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          return throwError(() => error);
+        })
+      );
+  };
 }

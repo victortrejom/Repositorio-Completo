@@ -32,7 +32,7 @@ export class Login {
   expire = signal<boolean>(false);
   err = signal<string | undefined>(undefined);
 
-    @Output() verify = new EventEmitter<string | undefined>();
+  @Output() verify = new EventEmitter<string | undefined>();
 
   constructor(
     private fb: FormBuilder,
@@ -63,19 +63,9 @@ export class Login {
     return password === repassword ? null : { noCoinciden: true };
   }
 
-
-  /*async hashPassword(password: string): Promise<string> {
-  const encoder = new TextEncoder();
-  const data = encoder.encode(password);
-  const hashBuffer = await window.crypto.subtle.digest("SHA-256", data);
-  const hashArray = Array.from(new Uint8Array(hashBuffer));
-  return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
-}*/
-
-hashPassword(password: string): string {
-  return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
-}
-
+  hashPassword(password: string): string {
+    return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+  }
 
   cancelar() {
     this.formulario.reset();
@@ -86,7 +76,7 @@ hashPassword(password: string): string {
     this.router.navigate(['/consulta']);
   }
 
-  // 🎯 SIEMPRE debe regresar string, sin undefined
+  // SIEMPRE debe regresar string, sin undefined
   captchaToken(): string {
     return this.token() ?? "";
   }
@@ -180,34 +170,8 @@ hashPassword(password: string): string {
   }
 
   guardarDatos() {
-  if (this.formulario.valid) {
-    const hashedPassword = this.hashPassword(this.formulario.value.password);
-
-    this.registroUsuario.guardar({
-      tipo_usuario: 1,
-      nombre_completo: this.formulario.value.nombre,
-      correo_electronico: this.formulario.value.email,
-      password: hashedPassword
-    }).subscribe({
-      next: () => {
-        this.closeModal();
-        this.formulario.reset();
-        this.modalConfirmarCorreo();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Error al guardar los datos');
-      }
-    });
-  }
-}
-
-
-  /*
-  async guardarDatos() {
-
     if (this.formulario.valid) {
-      const hashedPassword = await this.hashPassword(this.formulario.value.password);
+      const hashedPassword = this.hashPassword(this.formulario.value.password);
 
       this.registroUsuario.guardar({
         tipo_usuario: 1,
@@ -227,8 +191,7 @@ hashPassword(password: string): string {
       });
     }
   }
-    */
-
+  
   // hCaptcha callbacks
   onVerify = (token: string) => {
       this.token.set(token);

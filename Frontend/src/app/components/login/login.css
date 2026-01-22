@@ -139,14 +139,14 @@
   opacity: 0.9;
 }
 
-/* 🔥 ESTILO VISUAL CUANDO ESTÁ DESHABILITADO */
+/* ESTILO VISUAL CUANDO ESTÁ DESHABILITADO */
 .btn-ingresar:disabled {
   opacity: 0.4 !important;
   cursor: not-allowed;
   transform: none;
 }
 
-/* 🔥 BORDE SUAVIZADO CUANDO DESHABILITADO */
+/* BORDE SUAVIZADO CUANDO DESHABILITADO */
 .btn-ingresar:disabled::before {
   opacity: 0.3;
   border-color: #ddd;

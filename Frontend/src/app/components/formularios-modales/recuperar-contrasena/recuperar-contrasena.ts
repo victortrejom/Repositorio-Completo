@@ -14,11 +14,10 @@ import { Modal } from 'bootstrap';
 
 export class RecuperarContrasena implements OnInit{
 
-   formRecuperar!: FormGroup;
-   showModal: boolean = false;
+  formRecuperar!: FormGroup;
+  showModal: boolean = false;
 
-   constructor(private fb: FormBuilder, private miAuthService: RecuperarPassword) {}
-
+  constructor(private fb: FormBuilder, private miAuthService: RecuperarPassword) {}
 
   ngOnInit() {
     this.formRecuperar = this.fb.group({
@@ -41,7 +40,6 @@ export class RecuperarContrasena implements OnInit{
     }
   }
 
-  
   noexisteaPass() {
     const modalElement = document.getElementById('modalRecuperaContraseniaVacio');
     if (modalElement) {
@@ -53,28 +51,27 @@ export class RecuperarContrasena implements OnInit{
     }
   }
 
- enviarRecuperacion() {
-  if (this.formRecuperar.invalid) return;
+  enviarRecuperacion() {
+    if (this.formRecuperar.invalid) return;
 
-  const correo = this.formRecuperar.value.correo;
+    const correo = this.formRecuperar.value.correo;
 
-  this.miAuthService.recuperarPassword(correo).subscribe({
-    next: (resp) => {
-      this.closeModal();
-      this.formRecuperar.reset();
-      this.recuperaPass();
-    },
-    error: (err) => {
-      this.closeModal();
-      this.formRecuperar.reset();
-      this.noexisteaPass();
-    }
-  });
-}
+    this.miAuthService.recuperarPassword(correo).subscribe({
+      next: (resp) => {
+        this.closeModal();
+        this.formRecuperar.reset();
+        this.recuperaPass();
+      },
+      error: (err) => {
+        this.closeModal();
+        this.formRecuperar.reset();
+        this.noexisteaPass();
+      }
+    });
+  }
 
-   cancelar() {
+  cancelar() {
     this.formRecuperar.reset();
     this.showModal = false;
   }
-
 }

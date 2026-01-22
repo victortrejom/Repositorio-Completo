@@ -1,22 +1,20 @@
 <app-navbar></app-navbar>
 
-    @if(showModalSumate){
-    <app-sumate-necesidad
-        [isOpen2]="showModalSumate"
-        (close)="closeModalSumate()"
-        >
-    </app-sumate-necesidad>
-    }
+@if(showModalSumate){
+<app-sumate-necesidad
+    [isOpen2]="showModalSumate"
+    (close)="closeModalSumate()"
+    >
+</app-sumate-necesidad>
+}
 
-    
 <div class="fondo">
   <img src="assets/Home.png" class="bg-img" alt="">
 
-   <!-- ✅ BOTÓN SUPERIOR DERECHO (FUERA DEL PANEL) -->
+   <!--BOTÓN SUPERIOR DERECHO (FUERA DEL PANEL) -->
   <button class="btn-descargar-reporte" (click)="descargarReporte()">
     Descargar reporte general
   </button>
-
 
   <div class="panel-dashboard">
     <div class="panel-tabs">
@@ -44,5 +42,4 @@
     </button>
 
   </div>
-
 </div>

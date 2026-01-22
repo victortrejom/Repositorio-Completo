@@ -29,13 +29,9 @@ export class SumateNecesidad {
     private catalogos: Catalogos,
     private cd: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-  ) {
-
-  }
+  ) {}
 
   formularioRegistro!: FormGroup;
-
-
   catalogoAlcaldia: any[] = [];
   catalogoUT: any[] = [];
   tokenSesion: string = '';
@@ -54,18 +50,11 @@ export class SumateNecesidad {
 
   ngOnInit() {
     this.tokenSesion = sessionStorage.getItem('token') || '';
-
     const usuarioStorage = sessionStorage.getItem('usuario');
     const tipoUsuarioStorage = sessionStorage.getItem('tipo_usuario');
-
-
     const direccion_distrital = sessionStorage.getItem('direccion_distrital');
     const dd = Number(direccion_distrital);
     this.direccion_distrital = isNaN(dd) ? null : dd;
-
-
-
-
     this.usuario = usuarioStorage ? Number(usuarioStorage) : null;
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
 
@@ -77,11 +66,8 @@ export class SumateNecesidad {
       direccion_distrital: [null]
     });
 
-
     this.catalogo_primerCategoria();
     this.catalogo_alcaldia();
-
-
 
     if (!this.tipo_usuario || this.tipo_usuario == 3) {
       this.formularioRegistro!.patchValue({
@@ -102,7 +88,6 @@ export class SumateNecesidad {
 
     this.getRegistros();
   }
-
 
   catalogo_primerCategoria() {
     this.catalogos.getCatalogos("getPrimerCategoria").subscribe({
@@ -132,7 +117,6 @@ export class SumateNecesidad {
     });
   }
 
-
   catalogo_ut() {
     this.catalogos.getCatalogos("cat_unidadTerritorialAll").subscribe({
       next: (data) => {
@@ -159,7 +143,6 @@ export class SumateNecesidad {
       }
     });
   }
-
 
   onChangeUT(event: any) {
     const idUT = Number(event.target.value);
@@ -212,7 +195,6 @@ export class SumateNecesidad {
       }
     });
   }
-
 
   modalAviso() {
     const modalElement = document.getElementById('modalAvisoHome');
@@ -315,11 +297,9 @@ export class SumateNecesidad {
     });
   }
 
-
   cancelar() {
     this.close.emit();
   }
-
 
   closeModal() {
     this.showModal = false;
@@ -343,7 +323,6 @@ export class SumateNecesidad {
     this.getRegistros();
     this.cd.detectChanges();
   }
-
 
   filtrarPorPalabra(event: any) {
     const palabra = event.target.value.toLowerCase().trim();
@@ -382,22 +361,19 @@ export class SumateNecesidad {
   }
 
   limpiarFiltros() {
-  this.formularioRegistro.patchValue({
-    alcaldia: [''],
-    ut: [''],
-    catUno: [''],
-    ordenar: null
-  });
+    this.formularioRegistro.patchValue({
+      alcaldia: [''],
+      ut: [''],
+      catUno: [''],
+      ordenar: null
+    });
 
-  // Forzar que se ejecute tu change
-  const selectOrdenar: any = document.querySelector('select[formControlName="ordenar"]');
-  if (selectOrdenar) {
-    this.ordenarVotos({ target: selectOrdenar });
+    // Forzar que se ejecute tu change
+    const selectOrdenar: any = document.querySelector('select[formControlName="ordenar"]');
+    if (selectOrdenar) {
+      this.ordenarVotos({ target: selectOrdenar });
+    }
+
+    this.getRegistros();
   }
-
-  this.getRegistros();
-}
-
-
-
 }

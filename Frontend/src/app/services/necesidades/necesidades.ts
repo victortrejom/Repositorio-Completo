@@ -109,7 +109,6 @@ export class Necesidades {
       .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
   };
   
-
   getReporte(direccion_distrital:number | null, token: string) {
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`
@@ -124,7 +123,6 @@ export class Necesidades {
     });
   }
 
-
   getRegistro(idNecesidad:number | null): Observable<any> {
 
     const params = new HttpParams()
@@ -133,5 +131,4 @@ export class Necesidades {
     return this.http.get(this.apiUrl + '/necesidades/getRegistro', {params})
       .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
   };
-
 }

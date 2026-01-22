@@ -8,8 +8,6 @@
   z-index: 1000 !important;
 }
 
-
-
 /* HEADER */
 .modal-header-img {
   width: 60%;
@@ -64,7 +62,6 @@
   border: 2px solid black;
   font-size: 18px;
 }
-
 
 .filtros-row .form-label {
   white-space: nowrap;
@@ -147,7 +144,6 @@
     z-index: 5;          
     border-bottom: 2px solid white;
 }
-
 
 .btn-votar-pulse {
   width: 40px;

@@ -11,7 +11,6 @@ import { Component } from '@angular/core';
 })
 export class AvisoHome {
 
-
   activarBoton() {
     const check = (document.getElementById('privacidad') as HTMLInputElement).checked;
     const btnAceptar = document.getElementById('btnAceptar') as HTMLButtonElement;
@@ -21,9 +20,4 @@ export class AvisoHome {
   aceptarAviso() {
     sessionStorage.setItem('avisoPendiente', 'false');
   }
-
-
-
-  
-
 }

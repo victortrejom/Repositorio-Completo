@@ -13,7 +13,6 @@ export class Publico {
 
   constructor(private http: HttpClient) { }
 
-
   getAlcaldias(): Observable<any> {
     return this.http.get(this.apiUrl + '/publico/alcaldiasPub')
       .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
@@ -36,5 +35,4 @@ export class Publico {
       catchError((error: HttpErrorResponse) => throwError(() => error))
     );
   }
-  
 }

@@ -42,9 +42,7 @@ export class Graficas {
     } else if (this.tipo_usuario == 3) {
       this.getAlcaldias(null); // para mostrar todos si filtros
     }
-
   }
-
 
   getAlcaldias(id: number | null) {
     this.grafica.getAlcaldias(id, this.tokenSesion).subscribe({
@@ -88,10 +86,8 @@ export class Graficas {
           this.service.cerrarSesionByToken();
         }
       }
-
     });
   }
-
 
   getUT(id: number | null) {
     this.grafica.getUnidadTerritorial(id, this.tokenSesion).subscribe({
@@ -112,7 +108,6 @@ export class Graficas {
           this.service.cerrarSesionByToken();
         }
       }
-
     });
   }
 
@@ -135,7 +130,6 @@ export class Graficas {
           this.service.cerrarSesionByToken();
         }
       }
-
     });
   }
 
@@ -204,7 +198,6 @@ export class Graficas {
             }
           }
         }
-
       }
     });
   }
@@ -262,5 +255,4 @@ export class Graficas {
   closeModalSumate() {
     this.showModalSumate = false;
   }
-
 }

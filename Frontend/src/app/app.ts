@@ -5,7 +5,6 @@ import { Router, NavigationEnd } from '@angular/router';
 import { Modal } from 'bootstrap';
 import { RecuperarContrasena } from './components/formularios-modales/recuperar-contrasena/recuperar-contrasena';
 
-
 @Component({
   selector: 'app-root',
   standalone: true,
@@ -14,9 +13,8 @@ import { RecuperarContrasena } from './components/formularios-modales/recuperar-
   styleUrls: ['./app.css']
 })
 export class App {
+
   protected readonly title = signal('repositorio-ciudadana-front');
-
-
   showRecuperar = false;
 
   constructor(private router: Router) { }

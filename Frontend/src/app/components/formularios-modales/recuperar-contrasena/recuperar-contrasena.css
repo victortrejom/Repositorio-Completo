@@ -49,6 +49,7 @@
   margin-left: 0;  
   z-index: 1;
 }
+
 /* Texto justificado, alineado a la izquierda y con buen espacio */
 .texto-correo {
   text-align: justify;
