@@ -133,6 +133,7 @@
                                     <th class="col-votos">Contador de Apoyos</th>
                                     <th *ngIf="tipo_usuario == 1">Apoyar</th>
                                     <th *ngIf="tipo_usuario !== 1">Visualizar</th>
+                                    <th class="col-compartir">Compartir</th>
                                 </tr>
                             </thead>
 
@@ -151,6 +152,15 @@
                                             (click)="soloVer(item.id_necesidad)">
                                             👁
                                         </button>
+                                    </td>
+                                    <td class="col-compartir">
+                                        <button *ngIf="tipo_usuario === 1" class="btn-votar-pulse"
+                                            (click)="compartir(item.id_necesidad)">
+                                            Compartir
+                                        </button>
+                                        <app-share-link 
+                                        [url]="'http://localhost:4200/home/' + item.id_necesidad">
+                                        </app-share-link>
                                     </td>
 
                                 </tr>

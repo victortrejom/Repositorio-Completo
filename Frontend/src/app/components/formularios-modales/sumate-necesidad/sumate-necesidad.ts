@@ -8,6 +8,7 @@ import { Necesidades } from '../../../services/necesidades/necesidades';
 import { ChangeDetectorRef } from '@angular/core';
 import { Catalogos } from '../../../services/catalogos/catalogos';
 import { NuevaNecesidadComponent } from "../nueva-necesidad/nueva-necesidad";
+import { ShareLinkComponent } from "../../share-link/share-link";
 
 @Component({
   selector: 'app-sumate-necesidad',
@@ -15,7 +16,8 @@ import { NuevaNecesidadComponent } from "../nueva-necesidad/nueva-necesidad";
     CommonModule,
     FormsModule,
     ReactiveFormsModule,
-    NuevaNecesidadComponent],
+    NuevaNecesidadComponent,
+    ShareLinkComponent],
   templateUrl: './sumate-necesidad.html',
   styleUrl: './sumate-necesidad.css',
 })
@@ -239,6 +241,12 @@ export class SumateNecesidad {
   soloVer(id_necesidad: number) {
     this.idSeleccionado = id_necesidad;
     this.showModal = true;
+  }
+
+  compartir(id_necesidad: number) {
+    console.log("comparte");
+    this.idSeleccionado = id_necesidad;
+    console.log("visualiza", this.idSeleccionado);
   }
 
   async votar(id_necesidad: number) {

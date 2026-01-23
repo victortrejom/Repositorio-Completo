@@ -1,0 +1,146 @@
+.navbar-custom {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 9999;
+
+  width: 100%;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 0 20px;
+  background: transparent;
+  background-size: cover;
+  background-position: center;
+}
+
+/* IZQUIERDA */
+.nav-left {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  height: 60px;
+}
+
+/* BOTÓN PREGUNTAS */
+.btn-preguntas {
+  position: relative;   /* Necesario para que ::before se posicione respecto al botón */
+  background-color: #d85757;
+  margin-left: 5rem;
+  color: white;
+  padding: 8px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;         /* Quitamos el borde normal */
+  z-index: 1;           /* Asegura que el botón quede encima del borde */
+  transition: transform 0.2s;
+}
+
+.btn-preguntas:hover {
+  opacity: 0.8;
+  transform: scale(1.05); /* Opcional: efecto hover */
+}
+
+/* Borde desfasado */
+.btn-preguntas::before {
+  content: "";
+  position: absolute;
+  top: -6px;            /* Ajusta el desfase vertical */
+  left: -6px;           /* Ajusta el desfase horizontal */
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: -1;          /* Coloca el borde debajo del botón */
+  opacity: 0.9;
+}
+
+/* DERECHA */
+.nav-right {
+  margin-right: 2em;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(255,255,255,0.1);
+  border: 2px solid black;
+  padding: 8px 20px;
+  border-radius: 10px;
+}
+
+.nav-right2 {
+  margin-right: 2em;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 2px solid black;
+  padding: 8px 20px;
+  border-radius: 50px;
+}
+
+.bienvenida {
+  color: white;
+  font-size: 14px;
+  text-align: right;
+  line-height: 16px;
+}
+
+.titulo {
+  font-style: italic;
+  font-weight: 600;
+}
+
+.usuario {
+  font-weight: bold;
+}
+
+/* BOTÓN CERRAR */
+.btn-cerrar {
+  background: #e3cb49;
+  color: black;
+  padding: 8px 20px;
+  border-radius: 8px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+}
+.btn-cerrar:hover {
+  opacity: .8;
+}
+.btn-cancelarOut {
+  position: relative;
+  background-color: rgba(255, 194, 0, 0.71);
+  color: white;
+  padding: 8px 25px;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  z-index: 1;
+  transition: transform 0.2s;
+}
+
+.btn-cancelarOut:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.btn-cancelarOut::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid black;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.9;
+}

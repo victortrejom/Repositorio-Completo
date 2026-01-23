@@ -1,0 +1,43 @@
+<app-navbar></app-navbar>
+
+    @if(showModalSumate){
+    <app-sumate-necesidad
+        [isOpen2]="showModalSumate"
+        (close)="closeModalSumate()"
+        >
+    </app-sumate-necesidad>
+    }
+
+    
+<div class="fondo">
+
+  <img src="assets/Home.png" class="bg-img" alt="">
+
+  <div class="panel-dashboard">
+    <div class="panel-tabs">
+      <img 
+        class="tab-btn"
+        src="assets/PorAlcaldia.png"
+        [class.active]="modo === 'Alcaldia'"
+        (click)="cambiarVista()">
+
+      <img 
+        class="tab-btn"
+        [class.active]="modo === 'UT'"
+        (click)="cambiarVista()"
+        src="assets/PorUT.png">
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-wrapper">
+        <canvas id="chartNecesidades"></canvas>
+      </div>
+    </div>
+
+    <button class="btn-ver-todos" (click)="openModalSumate()">
+      Ver todos los registros
+    </button>
+
+  </div>
+
+</div>

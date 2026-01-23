@@ -79,6 +79,8 @@ router.post("/login", async (req, res) => {
   try {
     const { correo_electronico, password, captchaToken } = req.body;
 
+    console.log("Entro al log")
+
     if (!correo_electronico || !password) {
       return res.status(400).json({ message: "Faltan credenciales" });
     }

@@ -1,0 +1,152 @@
+<div class="fondo">
+  <img src="assets/Home.png" class="bg-img" alt="">
+
+<div class="seccion-opciones">
+
+  <div class="left">
+    <button class="btn-regresar" (click)="regresar()">Regresar</button>
+  </div>
+
+  <div class="center">
+    <div class="boton-imagen">Preguntas Frecuentes</div>
+  </div>
+
+  <div class="right"></div>
+
+</div>
+
+    <div class="banner-oscuro">
+
+        <!-- BOTONES ARRIBA -->
+        <div class="contenedor-botones">
+            <button class="btn-aceptar" (click)="usuSistema()">Uso del Sistema</button>
+            <button class="btn-aceptar" (click)="sobreNecesidad()">Sobre las Necesidades</button>
+            <button class="btn-aceptar" (click)="siguientesPasos()">Siguientes Pasos</button>
+            <button class="btn-aceptar" (click)="participativo()">Presupuesto Participativo</button>
+        </div>
+
+        <!-- CARD DE TEXTO ABAJO -->
+        <div class="card-texto">
+
+            <div class="texto" id="usoSistema">
+               <strong>1. ¿Qué es este sistema y para qué sirve?</strong><br>
+               <div class="sub-texto">
+                    Es una plataforma oficial para que tú y tus vecinos registren<br> 
+                    las necesidades prioritarias de la unidad territorial (colonia).<br>
+               </div>
+               <strong>2. ¿Cómo registro una necesidad?</strong><br>
+               <div class="sub-texto">
+                    Es muy sencillo:<br>
+                    1. Ingresa al sistema.<br>
+                    2. Ubica tu Alcaldía y tu unidad territorial<br>
+                    3. Describe la necesidad y llana los campos de categorización.<br> 
+                    4. Guarda y envía tu registro.
+               </div>
+               <strong>3. ¿Cómo elijo la categoría de mi necesidad?</strong><br>
+               <div class="sub-texto">
+                    El formulario te guiará para clasificar tu necesidad. Primero,<br>
+                    debes elegir la <strong>Primera Categoría</strong> (el tipo general):<br>
+                    <strong>·Equipamiento:</strong> Si es un inmueble, instalación (parques,<br> 
+                    escuelas, mercados) o mobiliario (bancas, botes de basura).<br> 
+                    <strong>· Infraestructura:</strong> Si es una red o sistema básico (drenaje,<br> 
+                    calles, red de luminarias, cables).<br>
+                    <strong>· Servicios urbanos:</strong> Si es una acción o actividad que usa lo<br>
+                    existente (talleres, cursos, recolección de residuos, patrullajes).<br> 
+                    <br>
+                    Después, el sistema te pedirá la <strong>Segunda Categoría:</strong> indicar si tu<br> 
+                    necesidad requiere una obra <strong>"Nueva"</strong> o un <strong>"Mantenimiento"</strong><br> 
+                    (para Equipamiento e Infraestructura). Finalmente, seleccionarás la<br> 
+                    <strong>Tercera Categoría</strong>, que es el rubro específico (ej. "Mantenimiento<br> 
+                    a equipamiento deportivo" o "Red vial peatonal nueva").
+               </div>
+            </div>
+
+            <div class="texto" id="sobreNecesidad">
+               <strong>4. ¿Es lo mismo registrar una "necesidad" que un "proyecto para el<br> 
+                    Presupuesto Participativo"?</strong><br>
+               <div class="sub-texto">
+                   No. El Sistema solo recibe registros sobre la necesidad (el problema)<br> 
+                   que los vecinos identifican dentro de las colonias o Unidades<br> 
+                   Territoriales, <strong>los resultados de este repositorio y registros no<br> 
+                   son vinculantes al Presupuesto Participativo.</strong> Los proyectos para<br> 
+                   participar en el Presupuesto Participativo serán registrados únicamente<br> 
+                   a treves del Sistema de Registro de Proyectos -SIPROE 2026 y 2027.<br>
+               </div>
+               <strong>5. ¿Qué pasa si mi necesidad ya fue registrada por otro vecino?</strong><br>
+               <div class="sub-texto">
+                   No importa, Súmate a esta necesidad a través del apartado “Súmate a<br> 
+                   una necesidad”. Que a una necesidad se sumen varias personas ayuda<br> 
+                   a identificarla como una prioridad para la comunidad, y esta resaltara<br> 
+                   para posteriormente ser registrada.<br>
+               </div>
+               <strong>6. ¿Debo ser muy específico en la descripción?</strong><br>
+               <div class="sub-texto">
+                   Sí. Esto facilitara a tus vecinos a identificar plenamente tu registro,<br> 
+                   incluye la ubicación exacta (calle, esquina, etc.) para que se entienda<br> 
+                   claramente cuál es la necesidad y dónde está.<br>
+               </div>
+               <strong>7. ¿Puedo indicar si mi necesidad beneficia a un grupo en especial?</strong><br>
+               <div class="sub-texto">
+                    Sí. El formulario tiene una sección (Cuarta Categoría) para que indiques<br> 
+                    si la necesidad tiene un enfoque de inclusión social para <strong>Mujeres,<br> 
+                    Infancias, Adultos mayores o Personas con discapacidad.</strong><br>
+               </div>
+            </div> 
+
+            <div class="texto" id="siguientesPasos">
+               <strong>8. ¿Mis datos personales serán públicos?</strong><br>
+               <div class="sub-texto">
+                   No. Tus datos de contacto son confidenciales y solo se usan
+                   para validar tu registro. La necesidad que reportas sí será pública, pero de forma anónima.
+               </div>
+               <strong>9. ¿Para qué servirá el listado oficial de necesidades?</strong><br>
+               <div class="sub-texto">
+                   Este listado será referente, en Asambleas Ciudadanas de Diagnóstico y Deliberación, y<br> 
+                   para toda la ciudadanía interesada en contemplar este<br> 
+                   repositorio al momento de diseñar, registrar y proponer los proyectos<br> 
+                   del Presupuesto Participativo.<br>
+               </div>
+            </div>
+
+            <div class="texto" id="participativo">
+               <strong>10. ¿Qué es la Consulta de Presupuesto Participativo?</strong><br>
+               <div class="sub-texto">
+                   Es el instrumento, mediante el cual la ciudadanía ejerce el derecho a
+                    decidir sobre la aplicación del recurso que otorga el Gobierno de la
+                    Ciudad, para que sus habitantes optimicen su entorno, proponiendo
+                    proyectos de obras y servicios, equipamiento e infraestructura urbana,
+                    y, en general, cualquier mejora para sus unidades territoriales.
+               </div>
+               <strong>11. ¿Cada cuánto se lleva a cabo la Consulta de Presupuesto Participativo?</strong><br>
+               <div class="sub-texto">
+                   Se realiza la jornada consultiva el primer domingo de mayo. Y de
+                    conformidad a lo previsto en el artículo 25, apartado F, numeral 2 de la
+                    Constitución Política de la Ciudad de México, en el año que se realice la elección de autoridades constitucionales
+                    no podrá realizarse la consulta de presupuesto participativo, En dicho
+                    supuesto, en la consulta de presupuesto participativo del año previo a la
+                    elección constitucional, se realizará la consulta del año en curso y para el
+                    año posterior.<br>
+               </div>
+               <strong>12. ¿Cómo se determina el proyecto ganador del presupuesto participativo?</strong><br>
+               <div class="sub-texto">
+                   La ciudadanía podrá emitir su opinión a través del Sistema Electrónico de
+                    Internet, para lo cual deberá descargar y/o actualizar la aplicación móvil del
+                    SEI disponible en tiendas virtuales como App Store y Play Store, o bien en
+                    las Mesas receptoras de opinión, ubicadas en espacios públicos de fácil y
+                    libre acceso en cada colonia<br>
+               </div>
+               <strong>13. ¿Dónde puedo realizar mi registro de proyecto para participar en la<br>
+                    Consulta de Presupuesto Participativo?</strong><br>
+               <div class="sub-texto aviso-preguntas">
+                    El registro lo puedes realizar por dos vías:<br><br>
+                    1. De manera presencial en cualquiera de las 33 Direcciones Distritales,<br>
+                    sino conoces a que Dirección Distrital pertenece tu domicilio, podrás<br>
+                    consultar el siguiente enlace: <a [href]="directorioIecm" target="_blank" class="link-iecm"><strong>Sedes Distritales</strong></a><br><br>
+                    2. Por internet ingresando y registrándote en el Sistema de Registro de<br>
+                    Proyectos -SIPROE 2026 y 2027, en el siguiente enlace: <strong>SIPROE 2026-2027</strong><br>
+               </div>
+            </div>
+
+        </div>
+    </div>
+</div>

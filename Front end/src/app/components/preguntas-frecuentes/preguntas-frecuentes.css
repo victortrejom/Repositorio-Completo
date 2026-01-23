@@ -1,0 +1,180 @@
+.bg-img {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  object-fit: cover;
+  z-index: -1;
+}
+
+/* --- Nueva distribución de 3 columnas --- */
+.seccion-opciones {
+  display: flex;
+  align-items: center;
+  padding: 20px 0;
+  background: rgba(0, 0, 0, 0.55);
+  margin-bottom: 50px;
+}
+
+/* Cada lado ocupa el mismo ancho */
+.left, .center, .right {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+/* Botón regresar alineado a la izquierda */
+.left {
+  justify-content: flex-start;
+  padding-left: 20px;
+}
+
+/* Preguntas Frecuentes centrado */
+.center {
+  justify-content: center;
+}
+
+/* Derecho vacío solo centra todo visualmente */
+.right {
+  justify-content: flex-end;
+}
+
+
+.boton-imagen {
+  color: white;
+  font-size: 40px;
+  font-weight: bold;
+}
+
+.banner-oscuro {
+  width: 100%;
+  flex: 1;
+  background-color: rgba(0, 0, 0, 0.55);
+
+  display: flex;
+  flex-direction: column;   
+  align-items: center;        
+  
+  padding-top: 20px;
+}
+
+
+.btn-aceptar {
+  position: relative;   /* ✅ IMPORTANTE */
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 40px;
+  margin: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgba(0, 255, 242, 0.41);
+}
+
+.btn-aceptar:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.btn-aceptar::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+.btn-aceptar:disabled {
+  background-color: rgba(0, 255, 36, 0.71);
+  color: black;
+  transform: none;
+  opacity: 0.6; 
+}
+
+.btn-aceptar:disabled::before {
+  border-color: black; 
+}
+/* textos*/
+.contenedor-botones {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  position: sticky;
+}
+
+/* CARD DE TEXTO */
+.card-texto {
+  width: 85%;
+  max-width: 1100px;
+  margin: 0 auto 40px auto;
+  background-color:transparent;
+  border-radius: 20px;
+  padding: 30px 40px;
+  color: white;
+  text-align: justify;
+  line-height: 1.7;
+  box-shadow: transparent;
+  max-height: 60vh;     
+  overflow-y: auto;     
+}
+
+
+.card-texto .texto {
+  margin-bottom: 25px;
+  font-size: 30px;
+}
+.sub-texto {
+  padding-left: 40px;
+  margin-top: 8px;        
+  font-size: 18px;
+  color: #f1f1f1;
+  line-height: 1.6;
+}
+
+.btn-regresar {
+  position: relative;   /* ✅ IMPORTANTE */
+  background: transparent;
+  color: white;
+  border-radius: 8px;
+  padding: 8px 40px;
+  margin: 15px;
+  font-weight: bold;
+  cursor: pointer;
+  background-color: rgba(0, 255, 36, 0.71);
+}
+
+.btn-regresar:hover {
+  opacity: 0.8;
+  transform: scale(1.05);
+}
+
+.btn-regresar::before {
+  content: "";
+  position: absolute;
+  top: -6px;
+  left: -6px;
+  width: 100%;
+  height: 100%;
+  border: 2px solid white;
+  border-radius: 10px;
+  z-index: -1;
+  opacity: 0.9;
+}
+
+.btn-regresar:disabled {
+  background-color: rgba(0, 255, 36, 0.71);
+  color: white;
+  transform: none;
+  opacity: 0.6; 
+}
+
+.btn-regresar:disabled::before {
+  border-color: white; 
+}
