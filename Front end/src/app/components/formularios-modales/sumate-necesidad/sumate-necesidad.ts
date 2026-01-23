@@ -245,9 +245,7 @@ export class SumateNecesidad {
 
   
   compartir(id_necesidad: number) {
-    console.log("comparte");
     this.idSeleccionado = id_necesidad;
-    console.log("visualiza", this.idSeleccionado);
   }
 
   async votar(id_necesidad: number) {
