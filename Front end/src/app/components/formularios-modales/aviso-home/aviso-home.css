@@ -10,7 +10,6 @@
   z-index: 3002 !important;
 }
 
-/* TU DISEÑO */
 .modal-container {
   position: relative;
   background: white;
@@ -21,8 +20,6 @@
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
   font-family: Arial, sans-serif;
 }
-
-/* IMAGEN */
 .aviso-importante {
   width: 180px;
   height: auto;

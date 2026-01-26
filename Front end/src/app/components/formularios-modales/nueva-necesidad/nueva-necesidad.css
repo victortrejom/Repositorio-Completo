@@ -1,5 +1,5 @@
 .modal-dialog {
-  max-width: 500px !important; /* showModal más ancho */
+  max-width: 500px !important; 
 }
 
 .modal-container {
@@ -15,14 +15,14 @@
 
 /* Imagen superior compacta */
 .confirma-correo {
-  width: 40%;          /* showModal más pequeña en ancho */
+  width: 40%;          
   top: -5%;
 }
 
 /* Labels más compactos */
 .modal-container label {
   display: block;
-  margin-top: 8px;      /* showModal reducimos espacio vertical */
+  margin-top: 8px;    
   font-size: 14px;
   color: #333;
 }
@@ -31,7 +31,7 @@
 .modal-container .form-select,
 .modal-container .form-control {
   font-size: 13px;
-  height: 30px;         /* showModal más compacto */
+  height: 30px;        
   padding: 3px 8px;
 }
 
@@ -50,7 +50,7 @@
 
 /* Select dentro de una fila */
 .select-horizontal {
-  width: 65%;         /* showModal mejor proporción al hacerlo más ancho */
+  width: 65%;         
   min-width: 130px;
 }
 
@@ -80,7 +80,7 @@
 
 /* Hacer la ventana más ancha */
 .swal-wide {
-  width: 650px !important; /* ajusta a gusto */
+  width: 650px !important;
   padding: 25px !important;
 }
 

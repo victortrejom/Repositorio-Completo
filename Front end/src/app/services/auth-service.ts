@@ -15,24 +15,6 @@ export class AuthService {
   private apiUrl = `${environment.apiUrl}`;
 
   constructor(private http: HttpClient, private router: Router) {}
-/*
-  login(correo_electronico: string, password: string): Observable<any> {
-
-    const hashedPassword = sha256(password);
-
-    const body = {
-      correo_electronico,
-      password: hashedPassword
-    };
-
-    return this.http.post(this.apiUrl + '/login/login', body)
-      .pipe(
-        catchError((error: HttpErrorResponse) => {
-          return throwError(() => error);
-        })
-      );
-  } 
-   */ 
 
   login(correo_electronico: string, password: string, captchaToken: string): Observable<any> {
 
@@ -41,7 +23,7 @@ export class AuthService {
   const body = {
     correo_electronico,
     password: hashedPassword,
-    captchaToken   // ← AGREGAR ESTO
+    captchaToken   
   };
 
   return this.http.post(this.apiUrl + '/login/login', body);

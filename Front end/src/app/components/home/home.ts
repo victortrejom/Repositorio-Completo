@@ -21,6 +21,7 @@ import Swal from 'sweetalert2';
 export class Home implements OnInit {
 
   formularioRegistro!: FormGroup;
+  formularioNewNed!: FormGroup;
   allDatableOriginal: any[] = [];
   allDatable: any[] = [];
   catalogoUT: any[] = [];
@@ -29,6 +30,11 @@ export class Home implements OnInit {
   idSeleccionado!: number;
   primerCAt: any[] = [];
   catalogoAlcaldia: any[] = [];
+
+  currentPage = 1;
+  pageSize = 10;
+  paginatedData: any[] = [];
+  totalPages = 1;
 
   tokenSesion: string = '';
   showModal = false;
@@ -45,10 +51,29 @@ export class Home implements OnInit {
 
   ngOnInit() {
     this.tokenSesion = sessionStorage.getItem('token')!;
+    const video = sessionStorage.getItem('muro');
     const pendiente = sessionStorage.getItem('avisoPendiente');
     const usuarioStorage = sessionStorage.getItem('usuario');
     const tipoUsuarioStorage = sessionStorage.getItem('tipo_usuario');
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
+
+
+    console.log("muestra video", video);
+
+    this.formularioNewNed = this.formBuilder.group({
+      alcaldiar: ['', Validators.required],
+      utr: ['', Validators.required],
+      claveUT: [{ value: '', disabled: true }, Validators.required],
+      catUno: ['', Validators.required],
+      catDos: ['', Validators.required],
+      catTres: ['', Validators.required],
+      enfoqueEsp: ['', Validators.required],
+      titulo: ['', Validators.required],
+      descripcion: ['', Validators.required],
+      idDistrito: [0, Validators.required],
+      idUT: [0, Validators.required],
+      folio: ['']
+    });
 
 
     this.usuario = usuarioStorage ? Number(usuarioStorage) : null;
@@ -71,9 +96,77 @@ export class Home implements OnInit {
     this.catalogo_primerCategoria();
     this.catalogo_alcaldia();
     this.getRegistros();
-
-
+    this.updatePagination();
   }
+
+getRegistros() {
+  this.serviceRegistros.getSumate(
+    this.formularioRegistro.value.direccion_distrital,
+    this.formularioRegistro.value.alcaldia,
+    this.formularioRegistro.value.ut,
+    this.formularioRegistro.value.catUno,
+    this.formularioRegistro.value.ordenar
+  ).subscribe({
+    next: (data) => {
+      const lista = data?.sumate ?? [];
+
+      if (lista.length > 0) {
+        this.allDatableOriginal = lista;
+        this.allDatable = [...lista];
+
+        // Reiniciar página al cargar nuevos datos
+        this.currentPage = 1;
+
+        // ACTUALIZAR PAGINACIÓN
+        this.updatePagination();
+
+        this.cd.detectChanges();
+      } else {
+        this.allDatable = [];
+        this.paginatedData = [];
+        Swal.fire("No se encontraron registros");
+      }
+    },
+    error: (err) => {
+      console.error(err);
+      this.allDatable = [];
+      this.paginatedData = [];
+      Swal.fire("No se encontraron registros");
+    }
+  });
+}
+
+// ---- PAGINACIÓN ---- //
+
+updatePagination() {
+  this.totalPages = Math.ceil(this.allDatable.length / this.pageSize) || 1;
+
+  const startIndex = (this.currentPage - 1) * this.pageSize;
+  const endIndex = startIndex + this.pageSize;
+
+  this.paginatedData = this.allDatable.slice(startIndex, endIndex);
+}
+
+nextPage() {
+  if (this.currentPage < this.totalPages) {
+    this.currentPage++;
+    this.updatePagination();
+  }
+}
+
+prevPage() {
+  if (this.currentPage > 1) {
+    this.currentPage--;
+    this.updatePagination();
+  }
+}
+
+// OPCIONAL: cambiar tamaño de página
+changePageSize(size: number) {
+  this.pageSize = size;
+  this.currentPage = 1;
+  this.updatePagination();
+}
 
   modalAviso() {
     const modalElement = document.getElementById('modalAvisoHome');
@@ -173,39 +266,6 @@ export class Home implements OnInit {
     });
   }
 
-  getRegistros() {
-    this.serviceRegistros.getSumate(
-      this.formularioRegistro.value.direccion_distrital,
-      this.formularioRegistro.value.alcaldia,
-      this.formularioRegistro.value.ut,
-      this.formularioRegistro.value.catUno,
-      this.formularioRegistro.value.ordenar
-    ).subscribe({
-      next: (data) => {
-        const lista = data?.sumate ?? [];
-
-        if (lista.length > 0) {
-          this.allDatableOriginal = lista;
-          this.allDatable = [...lista];
-          this.cd.detectChanges();
-
-        } else {
-          this.allDatable = [];
-          Swal.fire("No se encontraron registros");
-        }
-      },
-      error: (err) => {
-        console.error(err);
-        if (err) {
-          Swal.fire("No se encontraron registros");
-        }
-        if (err.error?.code === 100) {
-          this.allDatable = [];
-          Swal.fire("No se encontraron registros");
-        }
-      }
-    });
-  }
 
   filtrarPorPalabra(event: any) {
     const palabra = event.target.value.toLowerCase().trim();
