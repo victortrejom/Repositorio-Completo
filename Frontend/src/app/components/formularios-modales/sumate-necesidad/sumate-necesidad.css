@@ -118,6 +118,15 @@
   vertical-align: middle;
 }
 
+/* COMPARTIR */
+.col-compartir {
+    width: 100px;
+    max-width: 100px;
+    text-align: center;
+    font-weight: bold;
+}
+
+
 .apoyar-btn button {
   margin: 0 auto;
   display: block;

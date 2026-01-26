@@ -79,6 +79,8 @@ router.post("/login", async (req, res) => {
   try {
     const { correo_electronico, password, captchaToken } = req.body;
 
+    console.log("Entro al log")
+
     if (!correo_electronico || !password) {
       return res.status(400).json({ message: "Faltan credenciales" });
     }
@@ -116,7 +118,7 @@ router.post("/login", async (req, res) => {
       .input("correo_electronico", sql.VarChar, correo_electronico)
       .query(`
         SELECT id, tipo_usuario, estado_usuario,
-               nombre_completo, correo_electronico, password, direccion_distrital
+               nombre_completo, correo_electronico, password, direccion_distrital, video_muro
         FROM usuarios
         WHERE correo_electronico = @correo_electronico
       `);
@@ -139,7 +141,8 @@ router.post("/login", async (req, res) => {
       id: user.id,
       correo: user.correo_electronico,
       tipo_usuario: user.tipo_usuario,
-      direccion_distrital: user.direccion_distrital
+      direccion_distrital: user.direccion_distrital,
+      video_muro: user.video_muro
     };
 
     const token = jwt.sign(tokenPayload, secretKey, {
@@ -152,7 +155,8 @@ router.post("/login", async (req, res) => {
         id: user.id,
         nombre: user.nombre_completo,
         tipo_usuario: user.tipo_usuario,
-        direccion_distrital: user.direccion_distrital
+        direccion_distrital: user.direccion_distrital,
+        video_muro: user.video_muro
       }
     });
 
@@ -160,6 +164,10 @@ router.post("/login", async (req, res) => {
     return res.status(500).json({ message: "Error de servidor", detail: err.message });
   }
 });
+
+
+//validacion de muro
+
 
 
 
