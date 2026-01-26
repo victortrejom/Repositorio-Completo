@@ -27,6 +27,7 @@ import consulta from './Services/graficas/consulta.js';
 import reporte from './Services/reporte.js';
 import publico from './Services/consultaPublica.js';
 import descargas from './Services/descargas.js';
+import videos from './Services/videos.js';
 
 app.use('/api/registro', registros);
 app.use('/api/activar', activar);
@@ -38,6 +39,7 @@ app.use('/api/consulta', consulta);
 app.use('/api/reporte', reporte);
 app.use('/api/publico', publico);
 app.use('/api/descargas', descargas);
+app.use('/api/muro', videos);
 
 app.get('/env.js', (req, res) => {
   res.type('application/javascript');
