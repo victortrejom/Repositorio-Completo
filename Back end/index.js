@@ -28,6 +28,7 @@ import reporte from './Services/reporte.js';
 import publico from './Services/consultaPublica.js';
 import descargas from './Services/descargas.js';
 import videos from './Services/videos.js';
+import totales from './Services/graficas/totales.js'
 
 app.use('/api/registro', registros);
 app.use('/api/activar', activar);
@@ -40,6 +41,7 @@ app.use('/api/reporte', reporte);
 app.use('/api/publico', publico);
 app.use('/api/descargas', descargas);
 app.use('/api/muro', videos);
+app.use('/api/totales', totales)
 
 app.get('/env.js', (req, res) => {
   res.type('application/javascript');

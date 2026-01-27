@@ -1,4 +1,4 @@
-import { connectToDatabase } from "../Config/Configuracion.js";
+import { connectToDatabase, sql } from "../Config/Configuracion.js";
 import Midleware from "../Config/Midleware.js";
 import express from 'express';
 import dotenv from 'dotenv';
@@ -24,7 +24,7 @@ router.patch("/updateMuro", Midleware.verifyToken, async (req, res) => {
       .input('id_usuario', sql.Int, id_usuario)
       .query(`
                 UPDATE usuarios
-                SET video_muro = 0
+                SET video_muro = 1
                 where id = @id_usuario;
             `);
 
