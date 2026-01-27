@@ -11,8 +11,6 @@ import { NgHcaptchaModule } from 'ng-hcaptcha';
 import Swal from 'sweetalert2';
 import * as CryptoJS from 'crypto-js';
 
-
-
 @Component({
   selector: 'app-login',
   imports: [CommonModule, ReactiveFormsModule, NavbarComponent, ReactiveFormsModule, NgHcaptchaModule],
@@ -66,10 +64,9 @@ export class Login {
     return password === repassword ? null : { noCoinciden: true };
   }
 
-hashPassword(password: string): string {
-  return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
-}
-
+  hashPassword(password: string): string {
+    return CryptoJS.SHA256(password).toString(CryptoJS.enc.Hex);
+  }
 
   cancelar() {
     this.formulario.reset();
@@ -80,7 +77,6 @@ hashPassword(password: string): string {
     this.router.navigate(['/consulta']);
   }
 
-  // 🎯 SIEMPRE debe regresar string, sin undefined
   captchaToken(): string {
     return this.token() ?? "";
   }
@@ -91,7 +87,11 @@ hashPassword(password: string): string {
     const password = this.formularioLogin.get('password')?.value;
 
     if (!correo || !password) {
-      alert("Ingresa usuario y contraseña");
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor ingresa usuario y contraseña',
+      });
       return;
     }
 
@@ -135,7 +135,11 @@ hashPassword(password: string): string {
             return;
           }
 
-          alert("Usuario o contraseña incorrectos");
+          Swal.fire({
+            icon: 'error',
+            title: 'Error de autenticación',
+            text: err.error?.message || 'Ocurrió un error al iniciar sesión. Por favor, verifica tus credenciales e intenta nuevamente.',
+          });
         }
       });
   }
@@ -156,7 +160,6 @@ hashPassword(password: string): string {
     }
   }
 
-  // cuenta no encontrada 
   modalCuentaEncontrada() {
     const modalElement = document.getElementById('modalCuentaNoEncontrada');
     if (modalElement) {
@@ -165,7 +168,6 @@ hashPassword(password: string): string {
     }
   }
 
-  // cuenta no activa
   modalCuentaActiva() {
     const modalElement = document.getElementById('modalCuentaNoActiva');
     if (modalElement) {
@@ -175,28 +177,32 @@ hashPassword(password: string): string {
   }
 
   guardarDatos() {
-  if (this.formulario.valid) {
-    const hashedPassword = this.hashPassword(this.formulario.value.password);
+    if (this.formulario.valid) {
+      const hashedPassword = this.hashPassword(this.formulario.value.password);
 
-    this.registroUsuario.guardar({
-      tipo_usuario: 1,
-      nombre_completo: this.formulario.value.nombre,
-      correo_electronico: this.formulario.value.email,
-      password: hashedPassword
-    }).subscribe({
-      next: () => {
-        this.closeModal();
-        this.formulario.reset();
-        this.modalConfirmarCorreo();
-      },
-      error: (err) => {
-        console.error(err);
-        alert('Error al guardar los datos');
-      }
-    });
+      this.registroUsuario.guardar({
+        tipo_usuario: 1,
+        nombre_completo: this.formulario.value.nombre,
+        correo_electronico: this.formulario.value.email,
+        password: hashedPassword
+      }).subscribe({
+        next: () => {
+          this.closeModal();
+          this.formulario.reset();
+          this.modalConfirmarCorreo();
+        },
+        error: (err) => {
+          console.error(err);
+
+          Swal.fire({
+            icon: 'error',
+            title: 'Error al registrar',
+            text: 'Ocurrió un error al guardar los datos. Por favor, intenta nuevamente.',
+          });
+        }
+      });
+    }
   }
-}
-
 
   /*
   async guardarDatos() {
@@ -224,7 +230,6 @@ hashPassword(password: string): string {
   }
     */
 
-  // hCaptcha callbacks
   onVerify = (token: string) => {
       this.token.set(token);
       this.expire.set(false);
@@ -246,6 +251,10 @@ hashPassword(password: string): string {
   onError = (error: any) => {
       this.err.set(error);
       this.captchaValido = false;
+  }
+
+  changeUnidad(event: Event) {
+    //Aqui va la logica de cambio de texto y la consulta al endpoint
   }
 }
 

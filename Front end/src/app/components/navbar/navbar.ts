@@ -17,10 +17,8 @@ export class NavbarComponent {
   nombreUser: string = '';
   tipo_usuario: number = 0;
 
-
   constructor(private router: Router, private auth: AuthService) {
     this.checkRuta(this.router.url);
-
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
@@ -29,30 +27,23 @@ export class NavbarComponent {
     });
   }
    
-    ngOnInit(): void {
-      this.nombreUser = sessionStorage.getItem('nombre')!;
-      this.tipo_usuario = Number(sessionStorage.getItem('tipo_usuario')!);
-
-      // 👉 AQUÍ haz la validación
-      this.showNav3 = !(this.tipo_usuario === 2 || this.tipo_usuario === 3);
-    }
-
+  ngOnInit(): void {
+    this.nombreUser = sessionStorage.getItem('nombre')!;
+    this.tipo_usuario = Number(sessionStorage.getItem('tipo_usuario')!);
+    this.showNav3 = !(this.tipo_usuario === 2 || this.tipo_usuario === 3);
+  }
 
   checkRuta(url: string) {
-  this.showNav = url !== '/login' && url !== '/consulta' && url !== '/';
+    this.showNav = url !== '/login' && url !== '/consulta' && url !== '/';
 
-  this.showNav2 = url === '/consulta';
+    this.showNav2 = url === '/consulta';
 
-  if (this.tipo_usuario === 2 || this.tipo_usuario === 3) {
-    this.showNav3 = false;
-  } else {
-    this.showNav3 = true;
+    if (this.tipo_usuario === 2 || this.tipo_usuario === 3) {
+      this.showNav3 = false;
+    } else {
+      this.showNav3 = true;
+    }
   }
-}
-
-
-
-
 
   verPreguntas() {
     this.router.navigate(['/preguntas']);

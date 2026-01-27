@@ -72,7 +72,7 @@
 .card-inicio-sesion {
   position: absolute;
   bottom: 21%;
-  left: 5%;
+  left: 10%;
 
   width: 582vw;   /* AUMENTAMOS EL TAMAÑO TOTAL */
   min-width: 350px;
@@ -186,10 +186,9 @@
 }
 
 .botones-centrados {
-  display: flex;           /* Activamos flexbox */
-  justify-content: center; /* Centra horizontalmente */
-  gap: 15px;               /* Espacio entre los botones */
-  margin-top: 20px;        /* Opcional: espacio superior */
+  display: flex;
+  gap: 15px;
+  margin-top: 20px; 
 }
 
 /*MODAL*/

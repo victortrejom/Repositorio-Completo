@@ -10,6 +10,7 @@ import { Necesidades } from '../../services/necesidades/necesidades';
 import { Catalogos } from '../../services/catalogos/catalogos';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-home',
@@ -40,13 +41,19 @@ export class Home implements OnInit {
   showModal = false;
   showModalSumate = false;
 
+  public videoUrl: SafeResourceUrl;
+  public mostrarFrame: boolean = false;
+
   constructor(
     private formBuilder: FormBuilder,
     private serviceRegistros: Necesidades,
     private catalogos: Catalogos,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private sanitizer: DomSanitizer
   ) {
-
+    const videoId = 'dQw4w9WgXcQ';
+    const url = `https://www.youtube.com/embed/${videoId}`;
+    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 
   ngOnInit() {
@@ -75,10 +82,7 @@ export class Home implements OnInit {
       folio: ['']
     });
 
-
     this.usuario = usuarioStorage ? Number(usuarioStorage) : null;
-
-
 
     if (pendiente === 'true') {
       this.modalAviso();
@@ -99,74 +103,74 @@ export class Home implements OnInit {
     this.updatePagination();
   }
 
-getRegistros() {
-  this.serviceRegistros.getSumate(
-    this.formularioRegistro.value.direccion_distrital,
-    this.formularioRegistro.value.alcaldia,
-    this.formularioRegistro.value.ut,
-    this.formularioRegistro.value.catUno,
-    this.formularioRegistro.value.ordenar
-  ).subscribe({
-    next: (data) => {
-      const lista = data?.sumate ?? [];
+  getRegistros() {
+    this.serviceRegistros.getSumate(
+      this.formularioRegistro.value.direccion_distrital,
+      this.formularioRegistro.value.alcaldia,
+      this.formularioRegistro.value.ut,
+      this.formularioRegistro.value.catUno,
+      this.formularioRegistro.value.ordenar
+    ).subscribe({
+      next: (data) => {
+        const lista = data?.sumate ?? [];
 
-      if (lista.length > 0) {
-        this.allDatableOriginal = lista;
-        this.allDatable = [...lista];
+        if (lista.length > 0) {
+          this.allDatableOriginal = lista;
+          this.allDatable = [...lista];
 
-        // Reiniciar página al cargar nuevos datos
-        this.currentPage = 1;
+          // Reiniciar página al cargar nuevos datos
+          this.currentPage = 1;
 
-        // ACTUALIZAR PAGINACIÓN
-        this.updatePagination();
+          // ACTUALIZAR PAGINACIÓN
+          this.updatePagination();
 
-        this.cd.detectChanges();
-      } else {
+          this.cd.detectChanges();
+        } else {
+          this.allDatable = [];
+          this.paginatedData = [];
+          Swal.fire("No se encontraron registros");
+        }
+      },
+      error: (err) => {
+        console.error(err);
         this.allDatable = [];
         this.paginatedData = [];
         Swal.fire("No se encontraron registros");
       }
-    },
-    error: (err) => {
-      console.error(err);
-      this.allDatable = [];
-      this.paginatedData = [];
-      Swal.fire("No se encontraron registros");
+    });
+  }
+
+  // ---- PAGINACIÓN ---- //
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.allDatable.length / this.pageSize) || 1;
+
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+
+    this.paginatedData = this.allDatable.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
     }
-  });
-}
+  }
 
-// ---- PAGINACIÓN ---- //
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
 
-updatePagination() {
-  this.totalPages = Math.ceil(this.allDatable.length / this.pageSize) || 1;
-
-  const startIndex = (this.currentPage - 1) * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-
-  this.paginatedData = this.allDatable.slice(startIndex, endIndex);
-}
-
-nextPage() {
-  if (this.currentPage < this.totalPages) {
-    this.currentPage++;
+  // OPCIONAL: cambiar tamaño de página
+  changePageSize(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
     this.updatePagination();
   }
-}
-
-prevPage() {
-  if (this.currentPage > 1) {
-    this.currentPage--;
-    this.updatePagination();
-  }
-}
-
-// OPCIONAL: cambiar tamaño de página
-changePageSize(size: number) {
-  this.pageSize = size;
-  this.currentPage = 1;
-  this.updatePagination();
-}
 
   modalAviso() {
     const modalElement = document.getElementById('modalAvisoHome');
@@ -423,5 +427,14 @@ changePageSize(size: number) {
     });
   }
 
+  cerrarFrame() {
+    this.mostrarFrame = false;
+  }
+
+  abrirFrame() {
+    if (!this.mostrarFrame) {
+      this.mostrarFrame = true;
+    }
+  }
 
 }

@@ -18,17 +18,16 @@ export class AuthService {
 
   login(correo_electronico: string, password: string, captchaToken: string): Observable<any> {
 
-  const hashedPassword = sha256(password);
+    const hashedPassword = sha256(password);
 
-  const body = {
-    correo_electronico,
-    password: hashedPassword,
-    captchaToken   
-  };
+    const body = {
+      correo_electronico,
+      password: hashedPassword,
+      captchaToken   
+    };
 
-  return this.http.post(this.apiUrl + '/login/login', body);
-} 
-
+    return this.http.post(this.apiUrl + '/login/login', body);
+  } 
 
   logout() {
     sessionStorage.removeItem('token');
@@ -45,5 +44,10 @@ export class AuthService {
 
   cerrarSesionByToken() {
     this.router.navigate(['']);
+  }
+
+  updateVideoData(token: string, id: number): Observable<any> {
+    const headers = { 'Authorization': `Bearer ${token}` };
+    return this.http.patch(`${this.apiUrl}/muro/updateMuro`, {id_usuario: id}, { headers });
   }
 }
