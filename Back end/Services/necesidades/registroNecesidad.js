@@ -130,6 +130,8 @@ router.post("/altaNecesidad", Midleware.verifyToken, async (req, res) => {
 
     await transaction.commit();
 
+    const nuevoId = result.recordset[0].id;
+
     const direccionRow = (await pool.request()
       .input("id", sql.Int, direccion_distrital)
       .query(`SELECT direccion_distrital FROM cat_direccion_distrital WHERE id=@id`)
@@ -215,6 +217,7 @@ router.post("/altaNecesidad", Midleware.verifyToken, async (req, res) => {
     return res.status(200).json({
       message: "Registro creado correctamente, PDF generado y correo enviado",
       folio,
+      id: nuevoId,
       code: 200,
     });
 

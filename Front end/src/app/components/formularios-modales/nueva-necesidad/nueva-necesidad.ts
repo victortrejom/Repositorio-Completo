@@ -25,6 +25,7 @@ export class NuevaNecesidadComponent implements OnInit {
 
   @Input() isOpen = false;
   @Input() idNecesidad!: number;
+  @Input() idNecesidadNew!: number;
   @Output() close = new EventEmitter<void>();
   
   tokenSesion: string = '';
@@ -90,6 +91,17 @@ export class NuevaNecesidadComponent implements OnInit {
       this.formularioRegistro.get('descripcion')?.disable();
       this.formularioRegistro.get('folio')?.disable();
     } else {
+      this.getRegistros(this.idNecesidadNew);
+      this.formularioRegistro.get('alcaldia')?.disable();
+      this.formularioRegistro.get('ut')?.disable();
+      this.formularioRegistro.get('claveUT')?.disable();
+      this.formularioRegistro.get('catUno')?.disable();
+      this.formularioRegistro.get('catDos')?.disable();
+      this.formularioRegistro.get('catTres')?.disable();
+      this.formularioRegistro.get('enfoqueEsp')?.disable();
+      this.formularioRegistro.get('titulo')?.disable();
+      this.formularioRegistro.get('descripcion')?.disable();
+      this.formularioRegistro.get('folio')?.disable();
     }
 
   }

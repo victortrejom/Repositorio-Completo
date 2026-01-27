@@ -10,11 +10,16 @@ import { Necesidades } from '../../services/necesidades/necesidades';
 import { Catalogos } from '../../services/catalogos/catalogos';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import Chart from 'chart.js/auto';
+import { Registro2 } from "../formularios-modales/registro2/registro2";
+
+Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, AvisoHome, CommonModule, NuevaNecesidadComponent, SumateNecesidad, ReactiveFormsModule],
+  imports: [NavbarComponent, AvisoHome, CommonModule, Registro2, SumateNecesidad, ReactiveFormsModule, Registro2],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
@@ -25,26 +30,33 @@ export class Home implements OnInit {
   allDatableOriginal: any[] = [];
   allDatable: any[] = [];
   catalogoUT: any[] = [];
+  enfoqueESP: any[] = [];
   usuario: number | null = null;
   tipo_usuario: number | null = null;
   idSeleccionado!: number;
   primerCAt: any[] = [];
+  segundaCat: any[] = [];
   catalogoAlcaldia: any[] = [];
 
   currentPage = 1;
   pageSize = 10;
   paginatedData: any[] = [];
   totalPages = 1;
+  chart: any;
+  labels: string[] = [];
+  values: number[] = [];
+  modo: 'Registro' | 'UT' = 'Registro';
 
   tokenSesion: string = '';
-  showModal = false;
+  showModal2 = false;
   showModalSumate = false;
 
   constructor(
     private formBuilder: FormBuilder,
     private serviceRegistros: Necesidades,
     private catalogos: Catalogos,
-    private cd: ChangeDetectorRef
+    private cd: ChangeDetectorRef,
+    private grafica: Necesidades
   ) {
 
   }
@@ -58,7 +70,6 @@ export class Home implements OnInit {
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
 
 
-    console.log("muestra video", video);
 
     this.formularioNewNed = this.formBuilder.group({
       alcaldiar: ['', Validators.required],
@@ -92,81 +103,87 @@ export class Home implements OnInit {
       direccion_distrital: [null]
     });
 
+    //carga catalogos para registro
+    this.catalogo_enfoque();
+
+    //catalogos tabla de necesidades
     this.catalogo_ut();
     this.catalogo_primerCategoria();
     this.catalogo_alcaldia();
     this.getRegistros();
     this.updatePagination();
+
   }
 
-getRegistros() {
-  this.serviceRegistros.getSumate(
-    this.formularioRegistro.value.direccion_distrital,
-    this.formularioRegistro.value.alcaldia,
-    this.formularioRegistro.value.ut,
-    this.formularioRegistro.value.catUno,
-    this.formularioRegistro.value.ordenar
-  ).subscribe({
-    next: (data) => {
-      const lista = data?.sumate ?? [];
+  cerrarFormulario() {
+  this.showModal2 = false;
+}
 
-      if (lista.length > 0) {
-        this.allDatableOriginal = lista;
-        this.allDatable = [...lista];
 
-        // Reiniciar página al cargar nuevos datos
-        this.currentPage = 1;
 
-        // ACTUALIZAR PAGINACIÓN
-        this.updatePagination();
+  getRegistros() {
+    this.serviceRegistros.getSumate(
+      this.formularioRegistro.value.direccion_distrital,
+      this.formularioRegistro.value.alcaldia,
+      this.formularioRegistro.value.ut,
+      this.formularioRegistro.value.catUno,
+      this.formularioRegistro.value.ordenar
+    ).subscribe({
+      next: (data) => {
+        const lista = data?.sumate ?? [];
 
-        this.cd.detectChanges();
-      } else {
+        if (lista.length > 0) {
+          this.allDatableOriginal = lista;
+          this.allDatable = [...lista];
+
+          this.currentPage = 1;
+
+          this.updatePagination();
+
+          this.cd.detectChanges();
+        } else {
+          this.allDatable = [];
+          this.paginatedData = [];
+          Swal.fire("No se encontraron registros");
+        }
+      },
+      error: (err) => {
+        console.error(err);
         this.allDatable = [];
         this.paginatedData = [];
         Swal.fire("No se encontraron registros");
       }
-    },
-    error: (err) => {
-      console.error(err);
-      this.allDatable = [];
-      this.paginatedData = [];
-      Swal.fire("No se encontraron registros");
+    });
+  }
+
+  updatePagination() {
+    this.totalPages = Math.ceil(this.allDatable.length / this.pageSize) || 1;
+
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    const endIndex = startIndex + this.pageSize;
+
+    this.paginatedData = this.allDatable.slice(startIndex, endIndex);
+  }
+
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+      this.updatePagination();
     }
-  });
-}
+  }
 
-// ---- PAGINACIÓN ---- //
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+      this.updatePagination();
+    }
+  }
 
-updatePagination() {
-  this.totalPages = Math.ceil(this.allDatable.length / this.pageSize) || 1;
-
-  const startIndex = (this.currentPage - 1) * this.pageSize;
-  const endIndex = startIndex + this.pageSize;
-
-  this.paginatedData = this.allDatable.slice(startIndex, endIndex);
-}
-
-nextPage() {
-  if (this.currentPage < this.totalPages) {
-    this.currentPage++;
+  changePageSize(size: number) {
+    this.pageSize = size;
+    this.currentPage = 1;
     this.updatePagination();
   }
-}
-
-prevPage() {
-  if (this.currentPage > 1) {
-    this.currentPage--;
-    this.updatePagination();
-  }
-}
-
-// OPCIONAL: cambiar tamaño de página
-changePageSize(size: number) {
-  this.pageSize = size;
-  this.currentPage = 1;
-  this.updatePagination();
-}
 
   modalAviso() {
     const modalElement = document.getElementById('modalAvisoHome');
@@ -180,11 +197,11 @@ changePageSize(size: number) {
   }
 
   openModal() {
-    this.showModal = true;
+    this.showModal2 = true;
   }
 
   closeModal() {
-    this.showModal = false;
+    this.showModal2 = false;
   }
 
 
@@ -210,9 +227,10 @@ changePageSize(size: number) {
 
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
+    this.getGraficas();
   }
 
-  //codigo de consulta de tabla
+  //consulta de tabla
   modalAvisoRecuerda() {
     const modalElement = document.getElementById('modalAvisoRecuerda');
     if (modalElement) {
@@ -266,17 +284,55 @@ changePageSize(size: number) {
     });
   }
 
+  catalogo_utByid(id: number) {
+    this.catalogos.getCatalogoUT(id).subscribe({
+      next: (data) => {
+        this.catalogoUT = data.cat_unidadTerritorial ?? [];
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err.error.code === 160) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+    });
+  }
+
+  catalogo_enfoque() {
+    this.catalogos.getCatalogos("getCatalogoEnfoqueEsp").subscribe({
+      next: (data) => {
+        this.enfoqueESP = data.getCatalogoEnfoqueEsp ?? [];
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err.error.code === 160) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+    });
+  }
+
+  onChangeAlcaldia(event: any) {
+    const id = Number(event.target.value);
+    this.formularioRegistro!.patchValue({
+      claveUT: '',
+      ut: ''
+    });
+
+    this.catalogo_utByid(id);
+  }
+
 
   filtrarPorPalabra(event: any) {
     const palabra = event.target.value.toLowerCase().trim();
 
     if (!palabra) {
-      this.allDatable = [...this.allDatableOriginal];
+      this.paginatedData = [...this.allDatableOriginal];
       this.cd.detectChanges();
       return;
     }
 
-    this.allDatable = this.allDatableOriginal.filter((item: any) => {
+    this.paginatedData = this.allDatableOriginal.filter((item: any) => {
       return (
         item.titulo_necesidad?.toLowerCase().includes(palabra) ||
         item.descripcion_necesidad?.toLowerCase().includes(palabra) ||
@@ -284,7 +340,24 @@ changePageSize(size: number) {
         item.total_votos?.toString().includes(palabra)
       );
     });
+
+    this.cd.detectChanges();
   }
+
+
+  onChangeCat1(event: any) {
+    const idCat = Number(event.target.value);
+
+    this.formularioNewNed.patchValue({
+      catDos: '',
+      catTres: ''
+    });
+
+    this.segundaCat = [];
+    this.getSegundaCategoriaT(idCat);
+  }
+
+
 
   onChangeCat(event: any) {
     const idCat = Number(event.target.value);
@@ -295,17 +368,32 @@ changePageSize(size: number) {
     this.getRegistros();
   }
 
+  getSegundaCategoriaT(id: number) {
+    this.catalogos.getSegundaCategoria(id).subscribe({
+      next: (data) => {
+        this.segundaCat = data.getSegundaCategoria ?? [];
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err.error.code === 160) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+    });
+  }
+
+
   ordenarVotos(event: any) {
     const valor = Number(event.target.value);
 
     if (valor === 1) {
-      this.allDatable.sort((a: any, b: any) => b.total_votos - a.total_votos);
+      this.paginatedData.sort((a: any, b: any) => b.total_votos - a.total_votos);
     } else if (valor === 2) {
-      this.allDatable.sort((a: any, b: any) =>
+      this.paginatedData.sort((a: any, b: any) =>
         new Date(b.fecha_creacion).getTime() - new Date(a.fecha_creacion).getTime()
       );
     } else if (valor === 3) {
-      this.allDatable.sort((a: any, b: any) =>
+      this.paginatedData.sort((a: any, b: any) =>
         a.titulo_necesidad.localeCompare(b.titulo_necesidad)
       );
     }
@@ -341,7 +429,7 @@ changePageSize(size: number) {
 
   soloVer(id_necesidad: number) {
     this.idSeleccionado = id_necesidad;
-    this.showModal = true;
+    this.showModal2 = true;
   }
 
 
@@ -403,7 +491,6 @@ changePageSize(size: number) {
               return;
             }
 
-            // Otros errores
             Swal.fire({
               title: "Error",
               text: "No fue posible registrar tu apoyo.",
@@ -420,6 +507,95 @@ changePageSize(size: number) {
         });
       }
 
+    });
+  }
+
+
+  //graficas
+  getGraficas() {
+    this.grafica.getTotNecesidades().subscribe({
+      next: (data) => {
+
+        this.labels = [];
+        this.values = [];
+
+        data.getTotales.forEach((item: any) => {
+          this.labels.push(item.concepto);
+          this.values.push(item.total);
+        });
+        this.crearGrafica(this.labels, this.values);
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+
+    });
+  }
+
+  crearGrafica(labels: string[], values: number[]) {
+    const ctx: any = document.getElementById('chartNecesidades');
+
+    if (this.chart) this.chart.destroy();
+
+    this.chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          {
+            data: values,
+            backgroundColor: 'rgba(176, 140, 255, 0.9)',
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+
+        plugins: {
+          legend: { display: false },
+
+          title: {
+            display: true,
+            color: 'white',
+            font: { size: 20 }
+          },
+
+          datalabels: {
+            display: true,
+            color: '#ffffff',
+            anchor: 'end',
+            align: 'center',
+            clamp: true,
+            clip: false,
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            formatter: (value: any) => value
+          }
+        },
+
+        scales: {
+          x: {
+            ticks: {
+              color: 'transparent'
+            },
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            ticks: { color: 'white' },
+            grid: {
+              display: false
+            }
+          }
+        }
+
+      }
     });
   }
 

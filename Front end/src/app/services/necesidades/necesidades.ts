@@ -134,4 +134,9 @@ export class Necesidades {
       .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
   };
 
+  getTotNecesidades(): Observable<any> {
+    return this.http.get(this.apiUrl + '/totales/getTotales')
+      .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
+  };
+
 }

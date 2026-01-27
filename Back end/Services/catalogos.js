@@ -214,4 +214,34 @@ router.get("/cat_unidadTerritorialAll", async (req, res) => {
 });
 
 
+//unidad territorial por nombre
+router.get("/unidadTerritorial", async (req, res) => {
+  
+  const { nombre } = req.query;
+
+  console.log("nombre", nombre)
+
+    try {
+    const pool = await connectToDatabase();
+    const result = await pool.request()
+      .input('nombre', sql.VarChar, nombre)
+      .query(`SELECT cut.unidad_territorial
+              FROM cat_unidad_territorial cut
+              WHERE cut.unidad_territorial LIKE '%' + @nombre + '%'
+            `);
+
+    if (result.recordset.length > 0) {
+      return res.status(200).json({
+        unidadTerritorial: result.recordset
+      });
+    } else {
+      return res.status(200).json({ message: "No se encontro catalogo" });
+    }
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error de servidor", error: error.message });
+  }
+});
+
+
 export default router;

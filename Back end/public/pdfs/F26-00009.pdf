@@ -1,5 +1,17 @@
 %PDF-1.3
 %ÿÿÿÿ
+8 0 obj
+<<
+/Type /ExtGState
+/ca 0.12
+>>
+endobj
+9 0 obj
+<<
+/Type /ExtGState
+/ca 1
+>>
+endobj
 7 0 obj
 <<
 /Type /Page
@@ -12,9 +24,13 @@ endobj
 6 0 obj
 <<
 /ProcSet [/PDF /Text /ImageB /ImageC /ImageI]
+/ExtGState <<
+/Gs1 8 0 R
+/Gs2 9 0 R
+>>
 /Font <<
-/F1 8 0 R
-/F2 9 0 R
+/F2 10 0 R
+/F1 11 0 R
 >>
 /ColorSpace <<
 >>
@@ -22,35 +38,33 @@ endobj
 endobj
 5 0 obj
 <<
-/Length 572
+/Length 957
 /Filter /FlateDecode
 >>
 stream
-xœµ•»Ž1Eóþ
-ÿÀšzÞ²¥VH!&C«ééˆˆø}äÞ™Ù‡—‡Ð•[®S×uËœ(QºáD)ª¤ãÝômâ.ööpr²\œˆ,…F†¥ÃÝôæ}ÛH‡mú<»À¨¡a!Ø„`p!;Á¡ðPT¶$ú’¦w‡éãïÒ%ÔÈl×|,÷ùKRJ36Q±éí’œÒ,dPQÈªtþÕÑŒE³„ü4c«§€…âYÍÊ*²)+Ë¦¢¤¢.G!u½U×Ð[U%!c[GéPs§†{h88dI7ìi~*	ê½
-]?	‡CÀ]þï“Qbç\¤¤»‰ƒ³–¨U¯Á¯Ó§?c5ÎptJÚÒvgã%±PšýØ\…ÌÌí(äbnaÕÕÍei­6Û6*—P.Vîäê~}
-EÝ§–÷z•5Z«›‚cÙÙQžÜrð$’‹ØÜŽõþ¢›PðCKb:Ë‰½SCÎÅlm}UIËÞûOuôEî®Á§Ë\øOø"Ù;/«¨jßù¿>Êªåt5Ð·6Ü6LÁaûdØBN+xÚ
-e«o†57——êk£‹¦½ý+b-Ùú™©>zSéíÚ
-Y›yÔ,|ZÔf…an­Èf½aMGß)EÉA½a›Ê8›unS÷EömœÝ-›ü½3UÑ[ÓNkX8Ž¯Acé) €íë¨¼Rìá)y:C¡ûœ Ë$æ• ¬Ñ®q6âPD£Þ×K—=Þ¢Ñþãé¤ÿgµíG
+xœµW]këF}×¯Ø?Í|Ï.?äÞöB
+müVúd©šm ýûeV’DÉ­•¤a¯-ëÌ™9sv$HW˜ y¥Ôßw”$†ô×Ð]yÀôÛCwýyøû÷~øùËMê:È ¥+UAtMyþ¸ü” c5ð"Œì¤RÒCÿõñÓ>Ý¾ëi·Ÿ~ìn"Jz!ÊF/ðþìpEõæ0‰I’³e.’÷Ýõ÷”Òaì~Ù‰Ùh½Uùn©Ùˆ1±Ñ‘a~Õ}‚_Óá‡î»C÷Ó[ƒPHVk·SeŠAÉÔÜª³‹Ó>¤&¦2˜›:[514ùV4™Òr]“Y¶:…„	áå0BB“ËÁÆøîŠ!í"k¢¹rÔcÉN€r´Ñ«Æ†m…$’ábÕS¿#ÛüÎÐúHÊx…„Rsñtß©Ñ²øc%È’–+YÓ?Ýí{*KœAè¹ºT&FÆVG¶áck˜Ÿ×N"3Üò#ÃÑp[‰ã¹ëºFÂ2î“CÚiÞc­ñŽSï÷(Ã8~•†jSCS<Á„£²OØÚCš<PÓÎªË,ÉiÜ·±{5Êªr°'ºQïê–UV5«N­±ga´ïæ~;óÚL%¼]]s¡5‘ª$*A¦YªTe%©‘ÞÚÊ)=A˜àÖR°èŠ-[o8›Û>QSÕ@¤Í6"H’W˜éÈÈÄåƒ\[E3¡­v6ti69:E£=3£÷v·ç+é(<Vú1:añg{Ô|ÛLÀ!)zV²ç	Vž¯°³¹[µÑ™ÀÕÉÈÐ†Xo–rÆu§ž¹‡È2”`%_1l[­Ûp¶íe3Þ
+!U³—ÄÔú>•NÓÎyÎ Ä®×hªõo€+”­®à"v¼Ñy¼°Þúóù}œÕl°f÷²D6§ˆd”µs¾VÿÈ™³Gæx8Ú»U÷’°çbkUügC-1©4ÆmÛŠ<d†£·›šŒ7÷ˆ0g©ëœDwØ>FúŽ®-žu:ÆíM"TŸ¸ß©IL\­o;/OóÚlðu6ø1T¾Ð¸p¶"ó„¶¬þÿ‹çøa!"³¿DI•G•ì›œ¾=x_€hœé<Z/Ýî³aO]"MþQ‡æš­ðjÌNV^œG/xxl
+º<ü¤rù¦ë2jTJ<É¿žˆa¦±ÚàíŒbŸïÓÙÅÐ5î°ã€Kžþ§“Ó°O6—ž:õ’#â¿sàE=
 endstream
 endobj
-11 0 obj
+13 0 obj
 (PDFKit)
+endobj
+14 0 obj
+(PDFKit)
+endobj
+15 0 obj
+(D:20260127172253Z)
 endobj
 12 0 obj
-(PDFKit)
-endobj
-13 0 obj
-(D:20251211175730Z)
-endobj
-10 0 obj
 <<
-/Producer 11 0 R
-/Creator 12 0 R
-/CreationDate 13 0 R
+/Producer 13 0 R
+/Creator 14 0 R
+/CreationDate 15 0 R
 >>
 endobj
-8 0 obj
+11 0 obj
 <<
 /Type /Font
 /BaseFont /Helvetica
@@ -58,7 +72,7 @@ endobj
 /Encoding /WinAnsiEncoding
 >>
 endobj
-9 0 obj
+10 0 obj
 <<
 /Type /Font
 /BaseFont /Helvetica-Bold
@@ -93,28 +107,30 @@ endobj
 >>
 endobj
 xref
-0 14
+0 16
 0000000000 65535 f 
-0000001324 00000 n 
-0000001381 00000 n 
-0000001262 00000 n 
-0000001241 00000 n 
-0000000236 00000 n 
-0000000119 00000 n 
+0000001843 00000 n 
+0000001900 00000 n 
+0000001781 00000 n 
+0000001760 00000 n 
+0000000368 00000 n 
+0000000210 00000 n 
+0000000106 00000 n 
 0000000015 00000 n 
-0000001042 00000 n 
-0000001139 00000 n 
-0000000966 00000 n 
-0000000880 00000 n 
-0000000905 00000 n 
-0000000930 00000 n 
+0000000062 00000 n 
+0000001657 00000 n 
+0000001559 00000 n 
+0000001483 00000 n 
+0000001397 00000 n 
+0000001422 00000 n 
+0000001447 00000 n 
 trailer
 <<
-/Size 14
+/Size 16
 /Root 3 0 R
-/Info 10 0 R
-/ID [<13c450a871035bf7bdfd98eba957d533> <13c450a871035bf7bdfd98eba957d533>]
+/Info 12 0 R
+/ID [<9e252e2a0be69d3f3c4db7b33b9c5cc6> <9e252e2a0be69d3f3c4db7b33b9c5cc6>]
 >>
 startxref
-1428
+1947
 %%EOF

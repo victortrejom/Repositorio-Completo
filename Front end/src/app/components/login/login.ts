@@ -10,12 +10,13 @@ import { Modal } from 'bootstrap';
 import { NgHcaptchaModule } from 'ng-hcaptcha';
 import Swal from 'sweetalert2';
 import * as CryptoJS from 'crypto-js';
+import { AvisoHome } from "../formularios-modales/aviso-home/aviso-home";
 
 
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, ReactiveFormsModule, NgHcaptchaModule],
+  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, ReactiveFormsModule, NgHcaptchaModule, AvisoHome],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
@@ -59,6 +60,20 @@ export class Login {
       password: ['', Validators.required]
     });
   }
+  ngOnInit(){
+    this.modalAviso();
+  }
+
+  modalAviso() {
+    const modalElement = document.getElementById('modalAvisoLogin');
+    if (modalElement) {
+      const modal = new Modal(modalElement, {
+        backdrop: 'static',
+        keyboard: false
+      });
+      modal.show();
+    }
+  }
 
   passwordsIguales(group: AbstractControl): ValidationErrors | null {
     const password = group.get('password')?.value;
@@ -80,7 +95,6 @@ hashPassword(password: string): string {
     this.router.navigate(['/consulta']);
   }
 
-  // 🎯 SIEMPRE debe regresar string, sin undefined
   captchaToken(): string {
     return this.token() ?? "";
   }
@@ -196,34 +210,6 @@ hashPassword(password: string): string {
     });
   }
 }
-
-
-  /*
-  async guardarDatos() {
-
-    if (this.formulario.valid) {
-      const hashedPassword = await this.hashPassword(this.formulario.value.password);
-
-      this.registroUsuario.guardar({
-        tipo_usuario: 1,
-        nombre_completo: this.formulario.value.nombre,
-        correo_electronico: this.formulario.value.email,
-        password: hashedPassword
-      }).subscribe({
-        next: () => {
-          this.closeModal();
-          this.formulario.reset();
-          this.modalConfirmarCorreo();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Error al guardar los datos');
-        }
-      });
-    }
-  }
-    */
-
   // hCaptcha callbacks
   onVerify = (token: string) => {
       this.token.set(token);
