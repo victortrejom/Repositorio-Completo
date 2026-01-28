@@ -79,7 +79,6 @@
   font-weight: bold;
 }
 
-/* PANEL DE LA GRÁFICA */
 .chart-panel {
   flex: 1;
   padding: 30px;
@@ -87,9 +86,6 @@
   border-top-right-radius: 20px;
   border-bottom-right-radius: 20px;
 }
-
-
-/* WRAPPER */
 .chart-wrapper {
   width: 100%;
 }

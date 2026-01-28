@@ -62,13 +62,13 @@
 
                 <hr>
 
-                <!-- CATEGORÍAS -->
-            <h5 class="seccion-titulo">
+
+            <!--h5 class="seccion-titulo">
                 Selecciona la categoría que más describa tu problemàtica
                 <a class="link-categorias" href="#" (click)="$event.preventDefault(); descargarCategorias()">
                     Conoce el catálogo de categorías
                 </a>
-            </h5>
+            </h5-->
 
 
                 <div class="row g-3">
@@ -143,15 +143,14 @@
                 
                 <hr>
 
-                <!-- TÍTULO Y DESCRIPCIÓN -->
                 <div class="mt-3">
                     <label class="form-label">Título de la necesidad</label>
                     <input type="text" class="form-control" formControlName="titulo" maxlength="200" placeholder="">
                 </div>
 
                 <div class="mt-3">
-                    <label class="form-label">Descripción</label>
-                    <textarea rows="4" class="form-control" maxlength="800" formControlName="descripcion"
+                    <label class="form-label">Descripción del problema y posible solucion</label>
+                    <textarea rows="4" class="form-control" maxlength="1000" formControlName="descripcion"
                         placeholder=""></textarea>
                 </div>
 

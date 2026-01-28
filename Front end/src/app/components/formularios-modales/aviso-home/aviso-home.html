@@ -76,3 +76,45 @@
     </div>
   </div>
 }
+
+
+<!--  Aviso Importante -->
+<div class="modal fade" id="modalAvisoLogin" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-xl-custom">
+    <div class="modal-content modal-container">
+      <img src="assets/AvisoImportante.png" class="aviso-importante" alt="imagen">
+      <div class="modal-body">
+        <label class="texto-correo">
+          <strong>"El Instituto Electoral de la Ciudad de México</strong> te da la Bienvenida al <strong>Repositorio de Necesidades 
+          2026-2027.</strong> Una herramienta de apoyo a la deliberación digital colaborativa en la que <strong>podrás expresar</strong>
+          las <strong>necesidades urbanas y sociales</strong> de la unidad territorial o pueblo originario en que resides. 
+          Los datos recabados podrán ser parte del <strong>diagnóstico de la Consulta del Presupuesto Participativo </strong> y 
+          conformarán un historial que brindará información valiosa sobre la evolución de la participación 
+          ciudadana en la capital
+          <br>
+          <strong>¡Consulta</strong> lo que tus vecinas y vecinos han <strong>expresado y suma tus propuestas. Registrarte</strong> es muy fácil!
+          <hr>
+        </label>
+      </div>
+
+      <br>
+
+      <div class="container mt-3">
+        <div class="row align-items-center justify-content-end">
+
+          <div class="col-auto checkbox-container">
+          </div>
+
+          <div class="col-auto">
+            <button id="btnAceptar" class="btn-aceptar" type="button" (click)="aceptarAviso()" data-bs-dismiss="modal">
+              Aceptar
+            </button>
+          </div>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>

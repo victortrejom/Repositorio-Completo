@@ -10,50 +10,66 @@ import { Necesidades } from '../../services/necesidades/necesidades';
 import { Catalogos } from '../../services/catalogos/catalogos';
 import { ReactiveFormsModule } from '@angular/forms';
 import Swal from 'sweetalert2';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
+import Chart from 'chart.js/auto';
+import { Registro2 } from "../formularios-modales/registro2/registro2";
+import { Publico } from '../../services/publico/publico';
+import { DomSanitizer } from '@angular/platform-browser';
+
+Chart.register(ChartDataLabels);
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [NavbarComponent, AvisoHome, CommonModule, NuevaNecesidadComponent, SumateNecesidad, ReactiveFormsModule],
+  imports: [NavbarComponent, AvisoHome, CommonModule, Registro2, SumateNecesidad, ReactiveFormsModule, Registro2],
   templateUrl: './home.html',
   styleUrls: ['./home.css']
 })
 export class Home implements OnInit {
-
+  
   formularioRegistro!: FormGroup;
   formularioNewNed!: FormGroup;
   allDatableOriginal: any[] = [];
   allDatable: any[] = [];
   catalogoUT: any[] = [];
+  enfoqueESP: any[] = [];
   usuario: number | null = null;
   tipo_usuario: number | null = null;
   idSeleccionado!: number;
   primerCAt: any[] = [];
+  segundaCat: any[] = [];
   catalogoAlcaldia: any[] = [];
 
   currentPage = 1;
   pageSize = 10;
   paginatedData: any[] = [];
   totalPages = 1;
+  chart: any;
+  labels: string[] = [];
+  values: number[] = [];
+  modo: 'Registro' | 'UT' = 'Registro';
 
   tokenSesion: string = '';
-  showModal = false;
+  showModal2 = false;
   showModalSumate = false;
 
-  public videoUrl: SafeResourceUrl;
-  public mostrarFrame: boolean = false;
+  dropdownOpen = false;
+  selectedLabel = '';
+  hoverImage: string | null = null;
+  videoUrl: any = null;
+  mostrarFrame = false;
+
 
   constructor(
     private formBuilder: FormBuilder,
     private serviceRegistros: Necesidades,
     private catalogos: Catalogos,
     private cd: ChangeDetectorRef,
+    private grafica: Necesidades,
+    private miServicio: Publico,
     private sanitizer: DomSanitizer
   ) {
-    const videoId = 'dQw4w9WgXcQ';
-    const url = `https://www.youtube.com/embed/${videoId}`;
-    this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+
   }
 
   ngOnInit() {
@@ -65,7 +81,6 @@ export class Home implements OnInit {
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
 
 
-    console.log("muestra video", video);
 
     this.formularioNewNed = this.formBuilder.group({
       alcaldiar: ['', Validators.required],
@@ -82,7 +97,10 @@ export class Home implements OnInit {
       folio: ['']
     });
 
+
     this.usuario = usuarioStorage ? Number(usuarioStorage) : null;
+
+
 
     if (pendiente === 'true') {
       this.modalAviso();
@@ -96,12 +114,75 @@ export class Home implements OnInit {
       direccion_distrital: [null]
     });
 
+    //carga catalogos para registro
+    this.catalogo_enfoque();
+
+    //catalogos tabla de necesidades
     this.catalogo_ut();
     this.catalogo_primerCategoria();
     this.catalogo_alcaldia();
     this.getRegistros();
     this.updatePagination();
+
   }
+
+  cerrarFormulario() {
+  this.showModal2 = false;
+}
+
+toggleDropdown() {
+  this.dropdownOpen = !this.dropdownOpen;
+
+  if (!this.dropdownOpen) {
+    this.clearHoverImage();
+  }
+}
+
+selectOption(item: any) {
+  this.selectedLabel = item.primera_categoria;
+  this.dropdownOpen = false;
+
+  this.clearHoverImage();
+  
+  this.formularioNewNed.patchValue({
+    catUno: item.id,
+    catDos: '',
+    catTres: ''
+  });
+
+  this.segundaCat = [];
+  this.getSegundaCategoriaT(item.id);
+}
+
+onHoverOption(item: any) {
+  if (item.id === 1) {
+    this.hoverImage = 'assets/ajuste-engranaje.jpg';
+  } else if (item.id === 2) {
+    this.hoverImage = 'assets/SegCategoria.png';
+  } else if (item.id === 3) {
+    this.hoverImage = 'assets/enchufe.png';
+  } else {
+    this.hoverImage = null;
+  }
+}
+
+  cerrarFrame() {
+    this.mostrarFrame = false;
+  }
+
+  abrirFrame() {
+  const videoId = 'L-OfjJUd1ik';
+  const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+
+  this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  this.mostrarFrame = true;
+}
+
+
+
+clearHoverImage() {
+  this.hoverImage = null;
+}
 
   getRegistros() {
     this.serviceRegistros.getSumate(
@@ -118,10 +199,8 @@ export class Home implements OnInit {
           this.allDatableOriginal = lista;
           this.allDatable = [...lista];
 
-          // Reiniciar página al cargar nuevos datos
           this.currentPage = 1;
 
-          // ACTUALIZAR PAGINACIÓN
           this.updatePagination();
 
           this.cd.detectChanges();
@@ -139,8 +218,6 @@ export class Home implements OnInit {
       }
     });
   }
-
-  // ---- PAGINACIÓN ---- //
 
   updatePagination() {
     this.totalPages = Math.ceil(this.allDatable.length / this.pageSize) || 1;
@@ -165,7 +242,6 @@ export class Home implements OnInit {
     }
   }
 
-  // OPCIONAL: cambiar tamaño de página
   changePageSize(size: number) {
     this.pageSize = size;
     this.currentPage = 1;
@@ -184,11 +260,11 @@ export class Home implements OnInit {
   }
 
   openModal() {
-    this.showModal = true;
+    this.showModal2 = true;
   }
 
   closeModal() {
-    this.showModal = false;
+    this.showModal2 = false;
   }
 
 
@@ -214,9 +290,10 @@ export class Home implements OnInit {
 
   toggleMenu() {
     this.menuAbierto = !this.menuAbierto;
+    this.getGraficas();
   }
 
-  //codigo de consulta de tabla
+  //consulta de tabla
   modalAvisoRecuerda() {
     const modalElement = document.getElementById('modalAvisoRecuerda');
     if (modalElement) {
@@ -270,17 +347,55 @@ export class Home implements OnInit {
     });
   }
 
+  catalogo_utByid(id: number) {
+    this.catalogos.getCatalogoUT(id).subscribe({
+      next: (data) => {
+        this.catalogoUT = data.cat_unidadTerritorial ?? [];
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err.error.code === 160) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+    });
+  }
+
+  catalogo_enfoque() {
+    this.catalogos.getCatalogos("getCatalogoEnfoqueEsp").subscribe({
+      next: (data) => {
+        this.enfoqueESP = data.getCatalogoEnfoqueEsp ?? [];
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err.error.code === 160) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+    });
+  }
+
+  onChangeAlcaldia(event: any) {
+    const id = Number(event.target.value);
+    this.formularioRegistro!.patchValue({
+      claveUT: '',
+      ut: ''
+    });
+
+    this.catalogo_utByid(id);
+  }
+
 
   filtrarPorPalabra(event: any) {
     const palabra = event.target.value.toLowerCase().trim();
 
     if (!palabra) {
-      this.allDatable = [...this.allDatableOriginal];
+      this.paginatedData = [...this.allDatableOriginal];
       this.cd.detectChanges();
       return;
     }
 
-    this.allDatable = this.allDatableOriginal.filter((item: any) => {
+    this.paginatedData = this.allDatableOriginal.filter((item: any) => {
       return (
         item.titulo_necesidad?.toLowerCase().includes(palabra) ||
         item.descripcion_necesidad?.toLowerCase().includes(palabra) ||
@@ -288,7 +403,24 @@ export class Home implements OnInit {
         item.total_votos?.toString().includes(palabra)
       );
     });
+
+    this.cd.detectChanges();
   }
+
+
+  onChangeCat1(event: any) {
+    const idCat = Number(event.target.value);
+
+    this.formularioNewNed.patchValue({
+      catDos: '',
+      catTres: ''
+    });
+
+    this.segundaCat = [];
+    this.getSegundaCategoriaT(idCat);
+  }
+
+
 
   onChangeCat(event: any) {
     const idCat = Number(event.target.value);
@@ -299,17 +431,32 @@ export class Home implements OnInit {
     this.getRegistros();
   }
 
+  getSegundaCategoriaT(id: number) {
+    this.catalogos.getSegundaCategoria(id).subscribe({
+      next: (data) => {
+        this.segundaCat = data.getSegundaCategoria ?? [];
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err.error.code === 160) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+    });
+  }
+
+
   ordenarVotos(event: any) {
     const valor = Number(event.target.value);
 
     if (valor === 1) {
-      this.allDatable.sort((a: any, b: any) => b.total_votos - a.total_votos);
+      this.paginatedData.sort((a: any, b: any) => b.total_votos - a.total_votos);
     } else if (valor === 2) {
-      this.allDatable.sort((a: any, b: any) =>
+      this.paginatedData.sort((a: any, b: any) =>
         new Date(b.fecha_creacion).getTime() - new Date(a.fecha_creacion).getTime()
       );
     } else if (valor === 3) {
-      this.allDatable.sort((a: any, b: any) =>
+      this.paginatedData.sort((a: any, b: any) =>
         a.titulo_necesidad.localeCompare(b.titulo_necesidad)
       );
     }
@@ -345,7 +492,7 @@ export class Home implements OnInit {
 
   soloVer(id_necesidad: number) {
     this.idSeleccionado = id_necesidad;
-    this.showModal = true;
+    this.showModal2 = true;
   }
 
 
@@ -407,7 +554,6 @@ export class Home implements OnInit {
               return;
             }
 
-            // Otros errores
             Swal.fire({
               title: "Error",
               text: "No fue posible registrar tu apoyo.",
@@ -427,14 +573,110 @@ export class Home implements OnInit {
     });
   }
 
-  cerrarFrame() {
-    this.mostrarFrame = false;
+
+  //graficas
+  getGraficas() {
+    this.grafica.getTotNecesidades().subscribe({
+      next: (data) => {
+
+        this.labels = [];
+        this.values = [];
+
+        data.getTotales.forEach((item: any) => {
+          this.labels.push(item.concepto);
+          this.values.push(item.total);
+        });
+        this.crearGrafica(this.labels, this.values);
+        this.cd.detectChanges();
+      },
+      error: (err) => {
+        if (err) {
+          Swal.fire("No se encontraron registros");
+        }
+      }
+
+    });
   }
 
-  abrirFrame() {
-    if (!this.mostrarFrame) {
-      this.mostrarFrame = true;
-    }
+  crearGrafica(labels: string[], values: number[]) {
+    const ctx: any = document.getElementById('chartNecesidades');
+
+    if (this.chart) this.chart.destroy();
+
+    this.chart = new Chart(ctx, {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [
+          {
+            data: values,
+            backgroundColor: 'rgba(176, 140, 255, 0.9)',
+          }
+        ]
+      },
+      options: {
+        indexAxis: 'y',
+
+        plugins: {
+          legend: { display: false },
+
+          title: {
+            display: true,
+            color: 'white',
+            font: { size: 20 }
+          },
+
+          datalabels: {
+            display: true,
+            color: '#ffffff',
+            anchor: 'end',
+            align: 'center',
+            clamp: true,
+            clip: false,
+            font: {
+              weight: 'bold',
+              size: 16
+            },
+            formatter: (value: any) => value
+          }
+        },
+
+        scales: {
+          x: {
+            ticks: {
+              color: 'transparent'
+            },
+            grid: {
+              display: false
+            }
+          },
+          y: {
+            ticks: { color: 'white' },
+            grid: {
+              display: false
+            }
+          }
+        }
+
+      }
+    });
   }
+
+
+  descargarCategorias(){
+     this.miServicio.descargarCategorias("1757703550661-Categorias.docx").subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Catalogo de categorias';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Error al descargar archivo:', err)
+    });
+  }
+
+
 
 }

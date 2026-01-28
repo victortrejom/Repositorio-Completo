@@ -10,6 +10,7 @@ import { environment } from '../../enviroments/enviroment';
 })
 export class PreguntasFrecuentes {
   public directorioIecm = `${environment.directorioIecm}`;
+  public siproeIecm = `${environment.siproeIecm}`;
   
   constructor(private location: Location) {}
 

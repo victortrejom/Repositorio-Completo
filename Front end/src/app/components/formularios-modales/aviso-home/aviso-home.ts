@@ -22,8 +22,8 @@ export class AvisoHome {
     private sanitizer: DomSanitizer,
     private sesionVideoService: AuthService 
   ) {
-    const videoId = 'dQw4w9WgXcQ';
-    const url = `https://www.youtube.com/embed/${videoId}`;
+    const videoId = 'L-OfjJUd1ik';
+    const url = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
     this.videoUrl = this.sanitizer.bypassSecurityTrustResourceUrl(url);
   }
 

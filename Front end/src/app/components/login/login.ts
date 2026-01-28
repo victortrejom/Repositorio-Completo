@@ -257,4 +257,3 @@ export class Login {
     //Aqui va la logica de cambio de texto y la consulta al endpoint
   }
 }
-
