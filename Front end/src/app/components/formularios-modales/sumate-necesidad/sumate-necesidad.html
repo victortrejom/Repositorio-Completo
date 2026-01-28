@@ -2,13 +2,7 @@
     <div class="modal-dialog modal-dialog-centered modal-xxl">
         <div class="modal-content modal-sumate">
 
-            @if(!estado)
-            {
-
-            <img src="assets/SumateNecesidad2.png" class="imagen" alt="header">
-
-            }
-
+            @if(!estado){ <img src="assets/SumateNecesidad2.png" class="imagen" alt="header">}
 
             <div class="modal-body">
                 <form [formGroup]="formularioRegistro!">
@@ -18,11 +12,13 @@
 
                         <div class="col-md-6 d-flex align-items-center">
                             <label class="form-label me-3 lbl-fijo">Alcaldía</label>
-                            <select class="form-select flex-grow-1" formControlName="alcaldia"
+                            <select 
+                                class="form-select flex-grow-1" 
+                                formControlName="alcaldia"
                                 (change)="onChangeAlcaldia()">
                                 <option value="" selected>Seleccione una opción</option>
                                 @for (item of catalogoAlcaldia; track item) {
-                                <option [value]="item.id">{{item.demarcacion_territorial}}</option>
+                                    <option [ngValue]="item.id">{{item.demarcacion_territorial}}</option>
                                 }
                             </select>
                         </div>
@@ -151,8 +147,6 @@
                                             👁
                                         </button>
                                     </td>
-                                    
-
                                 </tr>
                             </tbody>
                         </table>
@@ -169,6 +163,9 @@
 </div>
 
 @if(showModal){
-<app-nueva-necesidad [isOpen]="showModal" [idNecesidad]="idSeleccionado" (close)="closeModal()">
-</app-nueva-necesidad>
+    <app-nueva-necesidad 
+        [isOpen]="showModal" 
+        [idNecesidad]="idSeleccionado" 
+        (close)="closeModal()">
+    </app-nueva-necesidad>
 }
