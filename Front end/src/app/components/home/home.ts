@@ -722,7 +722,4 @@ clearHoverImage() {
     Swal.fire('Liga copiada');
     });
   }
-
-
-
 }

@@ -1,278 +1,237 @@
 <app-navbar></app-navbar>
 <app-aviso-home></app-aviso-home>
 
+<img src="assets/Home.png" class="bg-img" alt="">
+
+<div class="container text-center seccion-opciones">
+  <div class="row">
+
+    <div class="col-2 d-flex justify-content-center align-items-center">
+      <button class="menu-btn" (click)="toggleMenu()">☰</button>
+    </div>
+
+    <div class="col-8">
+      <form [formGroup]="formularioNewNed!">
+        <div class="container text-center">
+          <div class="row">
+            <div class="col">
+              <label class="form-label">Título de la necesidad</label>
+              <input type="text"
+                     class="form-control input-transparente"
+                     formControlName="titulo">
+            </div>
+
+            <div class="col">
+                <label class="form-label me-3">Alcaldía</label>
+                <select 
+                    class="form-select flex-grow-1 input-transparente"
+                    formControlName="alcaldiar"
+                    (change)="onChangeAlcaldia($event)">
+                    <option value="" selected>Seleccione una opción</option>
+                    @for (item of catalogoAlcaldia; track item) {
+                    <option [value]="item.id">{{item.demarcacion_territorial}}</option>
+                    }
+                </select>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+                <label class="card-title form-label col-2">Categoría</label>
+                <select class="form-select input-transparente flex-grow-1" formControlName="catUno"
+                    (change)="onChangeCat($event)">
+                    <option value="" selected>Seleccione una opción</option>
+                    @for (item of primerCAt; track item) {
+                    <option [value]="item.id">{{item.primera_categoria}}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col d-flex justify-content-center align-items-center">
+              <button type="button"
+                      (click)="openModal()"
+                      class="mt-4 btn-aceptar">
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+
+    <div class="col-2"></div>
+  </div>
+</div>
+
+<div class="fondo">
+  <div class="banner-wrapper">
+    <section class="banner-oscuro active">
+      <div class="banner-inner">
+
+        <div class="card col-9 col-md-9 mx-auto padding-cards">
+          <div class="card-body">
+
+            <form [formGroup]="formularioRegistro!">
+
+              <!-- FILTROS -->
+              <div class="row g-3 filtros-row">
+
+                <div class="col-md-6 d-flex align-items-center">
+                  <label class="card-title col-2">Unidad Territorial</label>
+                  <select class="form-select"
+                          formControlName="ut"
+                          (change)="onChangeUT($event)">
+                    <option value="">Seleccione una opción</option>
+                    @for (item of catalogoUT; track item) {
+                      <option [value]="item.id">
+                        {{ item.unidad_territorial }}
+                      </option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-md-6 d-flex align-items-center">
+                  <label class="card-title col-2">Palabra Clave</label>
+                  <input class="form-control"
+                         placeholder="Buscar..."
+                         (input)="filtrarPorPalabra($event)">
+                </div>
+              </div>
+
+              <br>
+
+              <div class="row g-3 filtros-row">
+
+                <div class="col-md-6 d-flex align-items-center">
+                  <label class="card-title col-2">Categoría</label>
+                  <select class="form-select"
+                          formControlName="catUno"
+                          (change)="onChangeCat($event)">
+                    <option value="">Seleccione una opción</option>
+                    @for (item of primerCAt; track item) {
+                      <option [value]="item.id">
+                        {{ item.primera_categoria }}
+                      </option>
+                    }
+                  </select>
+                </div>
+
+                <div class="col-md-4 d-flex align-items-center">
+                  <label class="card-title col-3">Ordenar por</label>
+                  <select formControlName="ordenar"
+                          class="form-control"
+                          (change)="ordenarVotos($event)">
+                    <option [ngValue]="null">Selecciona</option>
+                    <option [ngValue]="1">Más apoyos</option>
+                    <option [ngValue]="2">Más recientes</option>
+                    <option [ngValue]="3">A - Z</option>
+                  </select>
+                </div>
+
+                <div class="col-md-2 d-flex align-items-center">
+                  <button type="button"
+                          class="btn-aceptar"
+                          (click)="limpiarFiltros()">
+                    Limpiar
+                  </button>
+                </div>
+              </div>
+
+              <div class="table-container mt-4">
+                <table class="table tabla-necesidades">
+                  <thead>
+                    <tr>
+                      <th>Título</th>
+                      <th>Descripción</th>
+                      <th>Categoría</th>
+                      <th>Apoyos</th>
+                      <th>Apoyar</th>
+                      <th>Compartir</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    <tr *ngFor="let item of paginatedData">
+                      <td>{{ item.titulo_necesidad }}</td>
+                      <td>{{ item.descripcion_necesidad }}</td>
+                      <td>{{ item.categoria }}</td>
+                      <td>{{ item.total_votos }}</td>
+
+                      <td class="apoyar-btn">
+                        <button *ngIf="tipo_usuario === 1"
+                                class="btn-votar-pulse"
+                                (click)="votar(item.id_necesidad)">
+                          +
+                        </button>
+                      </td>
+
+                      <td class="col-compartir position-relative">
+                        <button class="btn-share"
+                                (click)="toggleShare(item.id_necesidad)">
+                          🔗
+                        </button>
+
+                        <div class="share-bar"
+                             *ngIf="shareOpen === item.id_necesidad"
+                             (click)="$event.stopPropagation()">
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</div>
+
+<div class="overlay"
+     *ngIf="menuAbierto"
+     (click)="toggleMenu()">
+</div>
+
+<div class="menu-lateral"
+     [class.open]="menuAbierto">
+
+  <div class="menu-header">
+    <button class="close-btn" (click)="toggleMenu()">☰</button>
+    <span class="menu-title">Estadísticas generales</span>
+  </div>
+
+  <div class="chart-panel">
+    <div class="chart-wrapper">
+      <canvas id="chartNecesidades"></canvas>
+    </div>
+  </div>
+</div>
+
+@if(showModalSumate){
+  <app-sumate-necesidad
+    [isOpen2]="showModalSumate"
+    (close)="closeModalSumate()">
+  </app-sumate-necesidad>
+}
+
+@if (mostrarFrame) {
+  <div class="video-overlay" (click)="cerrarFrame()">
+    <div class="video-wrapper" (click)="$event.stopPropagation()">
+      <iframe
+        [src]="videoUrl"
+        allowfullscreen>
+      </iframe>
+    </div>
+  </div>
+}
 
 @if(showModal2){
   <app-registro2
-  [isOpen]="showModal2"
-  [formulario]="formularioNewNed"
-  [segundaCat]="segundaCat"
-  [catalogoUT]="catalogoUT"  
-  (closeFormulario)="cerrarFormulario()">
-</app-registro2>
+    [isOpen]="showModal2"
+    [formulario]="formularioNewNed"
+    [segundaCat]="segundaCat"
+    [catalogoUT]="catalogoUT"
+    (closeFormulario)="cerrarFormulario()">
+  </app-registro2>
 }
-
-@if(showModalSumate){
-<app-sumate-necesidad [isOpen2]="showModalSumate" (close)="closeModalSumate()">
-</app-sumate-necesidad>
-}
-
-<div class="fondo">
-
-    <img src="assets/Home.png" class="bg-img" alt="">
-
-    <div class="seccion-opciones">
-
-        <div class="header-bar">
-            <button class="menu-btn" (click)="toggleMenu()">
-                ☰
-            </button>
-
-            <div class="overlay" *ngIf="menuAbierto" (click)="toggleMenu()"></div>
-
-            <div class="menu-lateral" [class.open]="menuAbierto">
-
-                <div class="menu-header">
-                    <button class="close-btn" (click)="toggleMenu()">☰</button>
-                    <span>Estadísticas generales</span>
-                </div>
-
-                <div class="chart-panel">
-                    <div class="chart-wrapper">
-                        <canvas id="chartNecesidades"></canvas>
-                    </div>
-                </div>
-            </div>
-
-            <div class="linea-vertical"></div>
-
-            <div class="contenido-central">
-                <form [formGroup]="formularioNewNed!">
-                    <div class="imagen-container text-center">
-                        <img src="assets/Registross.png" class="boton-imagen">
-                    </div>
-                    <div class="formulario-grid">
-                        <div class="form-col">
-                            <div class="mb-3">
-                                <label class="form-label">Título de la necesidad</label>
-                                <input type="text" class="form-control input-transparente" formControlName="titulo">
-                            </div>
-                        
-                            <div class="mb-3 d-flex align-items-center position-relative">
-                                <label class="form-label me-3">Categoría</label>                                
-                            
-                                <div class="custom-select flex-grow-1">
-                            
-                                    <input type="hidden" formControlName="catUno">
-                            
-                                    <div class="select-box" (click)="toggleDropdown()">
-                                        {{ selectedLabel || 'Seleccione una opción' }}
-                                    </div>
-                            
-                                    <div class="options" *ngIf="dropdownOpen">
-                                        @for (item of primerCAt; track item) {
-                                        <div class="option" (mouseenter)="onHoverOption(item)" 
-                                            (mouseleave)="clearHoverImage()"(mouseleave)="hoverImage = null"
-                                            (click)="selectOption(item)">
-                            
-                                            {{ item.primera_categoria }}
-                                        </div>
-                                        }
-                                    </div>
-                            
-                                    <div *ngIf="hoverImage" class="preview-floating">
-                                        <img [src]="hoverImage">
-                                    </div>
-                            
-                                </div>
-                            </div>
-                            <a class="link-categorias" href="#" (click)="$event.preventDefault();descargarCategorias()">
-                                    Conoce el catálogo de categorías
-                            </a>                        
-                        </div>
-
-                        <div class="form-col">
-                            <div class="mb-3 d-flex align-items-center">
-                                <label class="form-label me-3">Alcaldía</label>
-                                 <select 
-                                    class="form-select flex-grow-1"
-                                    formControlName="alcaldiar"
-                                    (change)="onChangeAlcaldia($event)">
-                                    <option value="" selected>Seleccione una opción</option>
-                                    @for (item of catalogoAlcaldia; track item) {
-                                    <option [value]="item.id">{{item.demarcacion_territorial}}</option>
-                                    }
-                                </select>
-                            </div>
-
-                            <div class="text-end mt-4">
-                                <button type="button" class="btn-aceptar" (click)="openModal()">
-                                    Continuar
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-            </div>
-            <div class="linea-vertical"></div>
-        </div>
-    </div>
-
-    <div class="banner-wrapper">
-        <section class="banner-oscuro" [ngClass]="{ 'active': currentBanner === 1 }">
-                <div class="imagen-container">
-                    <img src="assets/SumateNecesidad2.png" class="boton-imagen">
-                </div>
-            <div class="banner-inner">
-
-                <div class="card col-9 col-md-9 mx-auto">
-                    <div class="card-body">
-                        <form [formGroup]="formularioRegistro!">
-                           <div style="text-align: right; cursor: pointer;" (click)="abrirFrame()">
-                            ¿Cómo funciona el muro?
-                            </div>
-
-                            @if (mostrarFrame) {
-                            <div class="video-overlay" (click)="cerrarFrame()">
-                                <div class="video-wrapper" (click)="$event.stopPropagation()">
-                                <iframe
-                                    [src]="videoUrl"
-                                    frameborder="0"
-                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                    allowfullscreen>
-                                </iframe>
-                                </div>
-                            </div>
-                            }
-
-                            <div class="row g-3 filtros-row">
-
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <label class="card-title col-2">Unidad Territorial</label>
-                                    <select class="form-select" formControlName="ut" (change)="onChangeUT($event)">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @for (item of catalogoUT; track item) {
-                                        <option [value]="item.id">{{item.unidad_territorial}}</option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <label class="card-title col-2">Palabra Clave</label>
-
-                                    <input class="form-control" placeholder="Buscar..."
-                                        (input)="filtrarPorPalabra($event)">
-                                </div>
-                            </div>
-                            <br>
-
-                            <div class="row g-3 filtros-row">
-
-                                <div class="col-md-6 d-flex align-items-center">
-                                    <label class="card-title col-2">Categoría</label>
-                                    <select class="form-select flex-grow-1" formControlName="catUno"
-                                        (change)="onChangeCat($event)">
-                                        <option value="" selected>Seleccione una opción</option>
-                                        @for (item of primerCAt; track item) {
-                                        <option [value]="item.id">{{item.primera_categoria}}</option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="col-md-4 d-flex align-items-center">
-                                    <label class="card-title col-3">Ordenar por</label>
-
-                                    <select formControlName="ordenar" class="form-control"
-                                        (change)="ordenarVotos($event)">
-                                        <option [ngValue]="null">Selecciona</option>
-                                        <option [ngValue]="1">Mas apoyos</option>
-                                        <option [ngValue]="2">Más recientes</option>
-                                        <option [ngValue]="3">A - Z</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-md-2 d-flex align-items-center">
-                                    <button type="button" class="btn-aceptar" (click)="limpiarFiltros()">
-                                        Limpiar
-                                    </button>
-                                </div>
-
-                            </div>
-
-                            <div class="table-container">
-                                <table class="table tabla-necesidades">
-                                    <thead>
-                                        <tr>
-                                            <th class="col-titulo">Título</th>
-                                            <th class="col-descripcion">Descripción</th>
-                                            <th class="col-categoria">Categoría</th>
-                                            <th class="col-votos">Contador de Apoyos</th>
-                                            <th>Apoyar</th>
-                                            <th>Compartir</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        <tr *ngFor="let item of paginatedData">
-                                            <td class="col-titulo">{{ item.titulo_necesidad }}</td>
-                                            <td class="col-descripcion">{{ item.descripcion_necesidad }}</td>
-                                            <td class="col-categoria">{{ item.categoria }}</td>
-                                            <td class="col-votos">{{ item.total_votos }}</td>
-
-                                            <td class="apoyar-btn">
-                                                <button *ngIf="tipo_usuario === 1" class="btn-votar-pulse"
-                                                    (click)="votar(item.id_necesidad)">
-                                                    +
-                                                </button>
-                                            </td>
-
-                                            <td class="col-compartir position-relative">
-                                                <button class="btn-share" *ngIf="tipo_usuario === 1" 
-                                                    (click)="toggleShare(item.id_necesidad)">
-                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16"> <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></svg>
-                                                </button>
-
-                                                 <div class="share-bar" *ngIf="shareOpen === item.id_necesidad" (click)="$event.stopPropagation()">
-                                                    <button class="btn btn-light" (click)="shareFacebook(item.id_necesidad)">
-                                                        <i class="bi bi-facebook"></i>
-                                                    </button>
-
-                                                    <button class="btn btn-light" (click)="shareWhatsapp(item.id_necesidad)">
-                                                        <i class="bi bi-whatsapp"></i>
-                                                    </button>
-
-                                                    <button class="btn btn-light" (click)="shareX(item.id_necesidad)">
-                                                        <i class="bi bi-twitter-x"></i>
-                                                    </button>
-
-                                                    <button class="btn btn-light" (click)="copyLink(item.id_necesidad)">
-                                                        <i class="bi bi-clipboard"></i>
-                                                    </button>
-                                                </div>
-
-                                            </td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-
-                                <div class="pagination">
-                                    <button (click)="prevPage()" [disabled]="currentPage === 1">
-                                        ⬅ Anterior
-                                    </button>
-
-                                    <span>Página {{ currentPage }} de {{ totalPages }}</span>
-
-                                    <button (click)="nextPage()" [disabled]="currentPage === totalPages">
-                                        Siguiente ➡
-                                    </button>
-                                </div>
-                            </div>
-
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-
-</div>

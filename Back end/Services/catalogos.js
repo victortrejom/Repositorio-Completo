@@ -213,7 +213,6 @@ router.get("/cat_unidadTerritorialAll", async (req, res) => {
   }
 });
 
-
 //unidad territorial por nombre
 router.get("/unidadTerritorial", async (req, res) => {
   
