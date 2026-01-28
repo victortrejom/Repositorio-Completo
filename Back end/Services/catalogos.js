@@ -224,8 +224,9 @@ router.get("/unidadTerritorial", async (req, res) => {
     const pool = await connectToDatabase();
     const result = await pool.request()
       .input('nombre', sql.VarChar, nombre)
-      .query(`SELECT cut.unidad_territorial
-              FROM cat_unidad_territorial cut
+      .query(`select cut.id as id_ut, cut.unidad_territorial, cdt.id as id_dt, cdt.demarcacion_territorial 
+              from cat_unidad_territorial cut 
+              join cat_demarcacion_territorial cdt on cut.demarcacion_territorial = cdt.id
               WHERE cut.unidad_territorial LIKE '%' + @nombre + '%'  
             `);
 
@@ -241,5 +242,4 @@ router.get("/unidadTerritorial", async (req, res) => {
     return res.status(500).json({ message: "Error de servidor", error: error.message });
   }
 });
-
 export default router;
