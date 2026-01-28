@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output, signal } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, HostListener, OnInit, Output, signal } from '@angular/core';
 import { NavbarComponent } from '../navbar/navbar';
 import { RegistroUsuarios } from '../../services/registro-usuarios';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -10,6 +10,7 @@ import { Modal } from 'bootstrap';
 import { NgHcaptchaModule } from 'ng-hcaptcha';
 import Swal from 'sweetalert2';
 import * as CryptoJS from 'crypto-js';
+import { Catalogos } from '../../services/catalogos/catalogos';
 
 @Component({
   selector: 'app-login',
@@ -33,13 +34,19 @@ export class Login {
   expire = signal<boolean>(false);
   err = signal<string | undefined>(undefined);
 
-    @Output() verify = new EventEmitter<string | undefined>();
+  unidades: any[] = [];
+  mostrarCatalogo = false;
+  timeoutBusqueda: any;
+
+  @Output() verify = new EventEmitter<string | undefined>();
 
   constructor(
     private fb: FormBuilder,
     private registroUsuario: RegistroUsuarios,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private cd: ChangeDetectorRef,
+    private catalogos: Catalogos
   ) {
 
     // formulario registrarme
@@ -204,32 +211,6 @@ export class Login {
     }
   }
 
-  /*
-  async guardarDatos() {
-
-    if (this.formulario.valid) {
-      const hashedPassword = await this.hashPassword(this.formulario.value.password);
-
-      this.registroUsuario.guardar({
-        tipo_usuario: 1,
-        nombre_completo: this.formulario.value.nombre,
-        correo_electronico: this.formulario.value.email,
-        password: hashedPassword
-      }).subscribe({
-        next: () => {
-          this.closeModal();
-          this.formulario.reset();
-          this.modalConfirmarCorreo();
-        },
-        error: (err) => {
-          console.error(err);
-          alert('Error al guardar los datos');
-        }
-      });
-    }
-  }
-    */
-
   onVerify = (token: string) => {
       this.token.set(token);
       this.expire.set(false);
@@ -253,7 +234,58 @@ export class Login {
       this.captchaValido = false;
   }
 
-  changeUnidad(event: Event) {
+  changeUnidad(event: any) {
     //Aqui va la logica de cambio de texto y la consulta al endpoint
+
+    const palabra = event.target.value.trim();
+
+    if(!palabra){
+      this.unidades = [];
+      this.mostrarCatalogo = false;
+      return;
+    }
+
+    clearTimeout(this.timeoutBusqueda);
+
+    this.timeoutBusqueda = setTimeout(() => {
+      this.catalogos.getTercerSearchUT(palabra).subscribe({
+        next: (data: any) => {
+          this.unidades = data.unidadTerritorial || [];
+          this.mostrarCatalogo = true;
+        },
+        error: () => {
+          this.unidades = [];
+        }
+      });
+    }, 400);      
+
+    // this.catalogos.getTercerSearchUT(palabra).subscribe({
+    //   next: (data) => {
+    //     console.log("Resultados de la búsqueda de unidad territorial:", data);
+    //   },
+    //   error: (error) => {
+    //     console.error("Error al buscar unidad territorial:", error);
+    //   }
+    // });
+
+    // console.log("Detecto cambios en el input de unidad territorial:", palabra);
+
   }
+
+  seleccionarUT(ut: any) {
+  const input = document.querySelector('.buscador-input') as HTMLInputElement;
+  input.value = ut.unidad_territorial;
+
+  this.mostrarCatalogo = false;
+  this.unidades = [];
+
+  console.log('Unidad seleccionada:', ut);
+}
+
+@HostListener('document:click')
+cerrarCatalogo() {
+  this.mostrarCatalogo = false;
+}
+
+
 }

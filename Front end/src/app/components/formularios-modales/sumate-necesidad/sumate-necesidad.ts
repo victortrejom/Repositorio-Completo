@@ -8,7 +8,7 @@ import { Necesidades } from '../../../services/necesidades/necesidades';
 import { ChangeDetectorRef } from '@angular/core';
 import { Catalogos } from '../../../services/catalogos/catalogos';
 import { NuevaNecesidadComponent } from "../nueva-necesidad/nueva-necesidad";
-import { ShareLinkComponent } from "../../share-link/share-link";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-sumate-necesidad',
@@ -17,7 +17,7 @@ import { ShareLinkComponent } from "../../share-link/share-link";
     FormsModule,
     ReactiveFormsModule,
     NuevaNecesidadComponent,
-    ShareLinkComponent],
+  ],
   templateUrl: './sumate-necesidad.html',
   styleUrl: './sumate-necesidad.css',
 })
@@ -27,17 +27,14 @@ export class SumateNecesidad {
   @Output() close = new EventEmitter<void>();
 
   constructor(
+    private router: Router,
     private serviceRegistros: Necesidades,
     private catalogos: Catalogos,
     private cd: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-  ) {
-
-  }
+  ) {}
 
   formularioRegistro!: FormGroup;
-
-
   catalogoAlcaldia: any[] = [];
   catalogoUT: any[] = [];
   tokenSesion: string = '';
@@ -59,15 +56,9 @@ export class SumateNecesidad {
 
     const usuarioStorage = sessionStorage.getItem('usuario');
     const tipoUsuarioStorage = sessionStorage.getItem('tipo_usuario');
-
-
     const direccion_distrital = sessionStorage.getItem('direccion_distrital');
     const dd = Number(direccion_distrital);
     this.direccion_distrital = isNaN(dd) ? null : dd;
-
-
-
-
     this.usuario = usuarioStorage ? Number(usuarioStorage) : null;
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
 
@@ -79,11 +70,8 @@ export class SumateNecesidad {
       direccion_distrital: [null]
     });
 
-
     this.catalogo_primerCategoria();
     this.catalogo_alcaldia();
-
-
 
     if (!this.tipo_usuario || this.tipo_usuario == 3) {
       this.formularioRegistro!.patchValue({
@@ -246,6 +234,12 @@ export class SumateNecesidad {
   
   compartir(id_necesidad: number) {
     this.idSeleccionado = id_necesidad;
+  }
+
+  votarFalso(){
+      sessionStorage.clear(); 
+      this.router.navigate(['/login']);
+      this.cd.detectChanges();
   }
 
   async votar(id_necesidad: number) {

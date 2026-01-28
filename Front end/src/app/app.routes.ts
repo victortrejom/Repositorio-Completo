@@ -8,7 +8,10 @@ export const routes: Routes = [
   { path: 'home', loadComponent: () => import('./components/home/home').then(m => m.Home), canActivate: [AuthGuard] },
   { path: 'necesidades', loadComponent: () => import('./components/graficas/graficas').then(m => m.Graficas), canActivate: [AuthGuard] },
   { path: 'consulta', loadComponent: () => import('./components/graficas-publica/graficas-publica').then(m => m.GraficasPublica) },
-  { path: 'preguntas', loadComponent: () => import('./components/preguntas-frecuentes/preguntas-frecuentes').then(m => m.PreguntasFrecuentes) }
+  { path: 'preguntas', loadComponent: () => import('./components/preguntas-frecuentes/preguntas-frecuentes').then(m => m.PreguntasFrecuentes) },
+  { path: 'consultaNecesidad/:id', loadComponent: () => import('./components/consulta-ficha/consulta-ficha').then(m => m.ConsultaFicha) }
+  
+
 ];
 
 // @NgModule({

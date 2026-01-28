@@ -1,10 +1,10 @@
-import { Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef, Host, HostListener } from '@angular/core';
 import { Modal } from 'bootstrap';
 import { AvisoHome } from '../formularios-modales/aviso-home/aviso-home';
-import { NuevaNecesidadComponent } from '../formularios-modales/nueva-necesidad/nueva-necesidad';
 import { CommonModule } from '@angular/common';
 import { SumateNecesidad } from '../formularios-modales/sumate-necesidad/sumate-necesidad';
 import { NavbarComponent } from '../navbar/navbar';
+import { Router } from '@angular/router';
 import { FormGroup, FormsModule, ɵInternalFormsSharedModule, FormBuilder, Validators } from "@angular/forms";
 import { Necesidades } from '../../services/necesidades/necesidades';
 import { Catalogos } from '../../services/catalogos/catalogos';
@@ -59,6 +59,7 @@ export class Home implements OnInit {
   videoUrl: any = null;
   mostrarFrame = false;
 
+  shareOpen: number | null = null;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -67,7 +68,8 @@ export class Home implements OnInit {
     private cd: ChangeDetectorRef,
     private grafica: Necesidades,
     private miServicio: Publico,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private router: Router
   ) {
 
   }
@@ -664,16 +666,60 @@ clearHoverImage() {
 
 
   descargarCategorias(){
-     this.miServicio.descargarCategorias("1757703550661-Categorias.docx").subscribe({
-      next: (blob) => {
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Catalogo de categorias';
-        a.click();
-        window.URL.revokeObjectURL(url);
-      },
-      error: (err) => console.error('Error al descargar archivo:', err)
+      this.miServicio.descargarCategorias("1757703550661-Categorias.docx").subscribe({
+        next: (blob) => {
+          const url = window.URL.createObjectURL(blob);
+          const a = document.createElement('a');
+          a.href = url;
+          a.download = 'Catalogo de categorias';
+          a.click();
+          window.URL.revokeObjectURL(url);
+        },
+        error: (err) => console.error('Error al descargar archivo:', err)
+      });
+    }
+  toggleShare(id: number) {
+    this.shareOpen = this.shareOpen === id ? null : id;
+  }
+
+ getShareUrl(id: number): string {
+  return encodeURIComponent(
+    `${window.location.origin}/#/consultaNecesidad/${id}`
+  );
+  }
+
+
+
+  shareFacebook(id: number) {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${this.getShareUrl(id)}`,
+      '_blank'
+    );
+    this.shareOpen = null;
+  }
+
+
+  shareWhatsapp(id: number) {
+    window.open(
+      `https://wa.me/?text=${this.getShareUrl(id)}`,
+      '_blank'
+    );
+    this.shareOpen = null;
+  }
+
+
+  shareX(id: number) {
+    window.open(
+      `https://twitter.com/intent/tweet?url=${this.getShareUrl(id)}`,
+      '_blank'
+    );
+    this.shareOpen = null;
+  }
+
+  copyLink(id: number) {
+    const url = `${window.location.origin}/#\/consultaNecesidad/${id}`;
+     navigator.clipboard.writeText(url).then(() => {
+    Swal.fire('Liga copiada');
     });
   }
 

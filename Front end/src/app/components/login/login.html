@@ -9,15 +9,36 @@
             <div class="container">
                 <div class="row align-items-start"  style="width: 120%;">
                     <div class="col-8 d-flex justify-content-center">
-                        <div class="input-group w-80">
+                        <div class="input-group w-80 position-relative" (click)="$event.stopPropagation()">
                             <input
                                 type="text"
                                 class="form-control"
-                                placeholder="Buscar..."
-                                aria-label="Buscar"
-                                aria-describedby="basic-addon1">
-                                <span class="input-group-text">🔍</span>
+                                placeholder="¿Quieres saber que ocurre cerca de ti? Busca tu colonía"
+                                autocomplete="off"
+                                (input)="changeUnidad($event)"
+                                (focus)="mostrarCatalogo = true"
+                            />
+                            
+                            <span class="input-group-text">🔍</span>
+
+                            <div class="dropdown-ut"
+                                *ngIf="mostrarCatalogo && unidades.length > 0">
+
+                                <div class="item-ut"
+                                    *ngFor="let ut of unidades"
+                                    (click)="seleccionarUT(ut)">
+                                <span class="nombre">
+                                    {{ ut.unidad_territorial }}
+                                </span>
+
+                                <span class="alcaldia">
+                                    {{ ut.alcaldia || 'Coyoacán' }}
+                                </span>
+                                </div>
+
+                            </div>
                         </div>
+                        
                     </div>
 
                     <div class="col-4 text-end">

@@ -226,11 +226,30 @@
                                                 </button>
                                             </td>
 
-                                            <td class="col-compartir">
+                                            <td class="col-compartir position-relative">
                                                 <button class="btn-share" *ngIf="tipo_usuario === 1" 
-                                                    (click)="compartir(item.id_necesidad)">
+                                                    (click)="toggleShare(item.id_necesidad)">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-share" viewBox="0 0 16 16"> <path d="M13.5 1a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3M11 2.5a2.5 2.5 0 1 1 .603 1.628l-6.718 3.12a2.5 2.5 0 0 1 0 1.504l6.718 3.12a2.5 2.5 0 1 1-.488.876l-6.718-3.12a2.5 2.5 0 1 1 0-3.256l6.718-3.12A2.5 2.5 0 0 1 11 2.5m-8.5 4a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3m11 5.5a1.5 1.5 0 1 0 0 3 1.5 1.5 0 0 0 0-3"/></svg>
                                                 </button>
+
+                                                 <div class="share-bar" *ngIf="shareOpen === item.id_necesidad" (click)="$event.stopPropagation()">
+                                                    <button class="btn btn-light" (click)="shareFacebook(item.id_necesidad)">
+                                                        <i class="bi bi-facebook"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-light" (click)="shareWhatsapp(item.id_necesidad)">
+                                                        <i class="bi bi-whatsapp"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-light" (click)="shareX(item.id_necesidad)">
+                                                        <i class="bi bi-twitter-x"></i>
+                                                    </button>
+
+                                                    <button class="btn btn-light" (click)="copyLink(item.id_necesidad)">
+                                                        <i class="bi bi-clipboard"></i>
+                                                    </button>
+                                                </div>
+
                                             </td>
                                         </tr>
                                     </tbody>
