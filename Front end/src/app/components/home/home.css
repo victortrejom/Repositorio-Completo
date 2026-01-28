@@ -115,7 +115,6 @@
   z-index: 1;
   width: 100%;
   height: 90vh;
-  overflow: hidden;
 }
 
 .banner-oscuro {
@@ -169,7 +168,6 @@
   transition: transform 0.35s ease;
   z-index: 99999;
 }
-
 
 .menu-lateral.open {
   transform: translateX(0);
@@ -404,17 +402,13 @@ canvas {
   width: 100%;
 }
 .select-box {
-  padding: 1px 1px;
-  border-radius: 2px;
-  background: white;
-  cursor: pointer;
+  padding: 5px 1px;
 }
+
 .options {
-  position: absolute;
-  top: 100%;
-  width: 100%;
+  color: white;
   border: 1px solid #ccc;
-  background: white;
+  background: black;
   border-radius: 6px;
   max-height: 200px;
   overflow-y: auto;
@@ -428,23 +422,25 @@ canvas {
   background: #f1f1f1;
 }
 .preview-floating {
-  position: absolute;
-  top: 100%;
-  right: -150px; 
-  transform: translateY(-50%);
+  top: 110%;
+  left: 50%;
+  transform: translateX(-50%);
   background: white;
   border: 1px solid #ddd;
   padding: 6px;
   border-radius: 8px;
-  box-shadow: 0 5px 12px rgba(0,0,0,0.15);
-  z-index: 1000;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.25);
+  z-index: 99999;
+  width: max-content; /* o un ancho fijo si prefieres */
 }
+
+
 .preview-floating img {
   width: 120px;
   height: auto;
-  display: block;
   border-radius: 6px;
 }
+
 .link-categorias{
   font-size: 14px;
   color: #f2f2f2;
@@ -461,17 +457,6 @@ canvas {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(8px);
   -webkit-backdrop-filter: blur(8px);
-}
-
-.video-wrapper {
-  width: 80%;
-  max-width: 900px;
-  aspect-ratio: 16 / 9;
-
-  background: black;
-  border-radius: 12px;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.7);
-  overflow: hidden;
 }
 
 .video-wrapper iframe {
@@ -502,4 +487,12 @@ canvas {
 
 .share-bar i {
   font-size: 18px;
+}
+
+.col.position-relative {
+  overflow: visible !important;
+}
+
+.col-8.text-center {
+  position: relative;
 }

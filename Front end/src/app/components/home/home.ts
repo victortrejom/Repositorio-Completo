@@ -664,31 +664,29 @@ clearHoverImage() {
     });
   }
 
-
   descargarCategorias(){
-      this.miServicio.descargarCategorias("1757703550661-Categorias.docx").subscribe({
-        next: (blob) => {
-          const url = window.URL.createObjectURL(blob);
-          const a = document.createElement('a');
-          a.href = url;
-          a.download = 'Catalogo de categorias';
-          a.click();
-          window.URL.revokeObjectURL(url);
-        },
-        error: (err) => console.error('Error al descargar archivo:', err)
-      });
-    }
+    this.miServicio.descargarCategorias("1757703550661-Categorias.docx").subscribe({
+      next: (blob) => {
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Catalogo de categorias';
+        a.click();
+        window.URL.revokeObjectURL(url);
+      },
+      error: (err) => console.error('Error al descargar archivo:', err)
+    });
+  }
+
   toggleShare(id: number) {
     this.shareOpen = this.shareOpen === id ? null : id;
   }
 
- getShareUrl(id: number): string {
-  return encodeURIComponent(
-    `${window.location.origin}/#/consultaNecesidad/${id}`
-  );
+  getShareUrl(id: number): string {
+    return encodeURIComponent(
+      `${window.location.origin}/#/consultaNecesidad/${id}`
+    );
   }
-
-
 
   shareFacebook(id: number) {
     window.open(
@@ -698,7 +696,6 @@ clearHoverImage() {
     this.shareOpen = null;
   }
 
-
   shareWhatsapp(id: number) {
     window.open(
       `https://wa.me/?text=${this.getShareUrl(id)}`,
@@ -706,7 +703,6 @@ clearHoverImage() {
     );
     this.shareOpen = null;
   }
-
 
   shareX(id: number) {
     window.open(
