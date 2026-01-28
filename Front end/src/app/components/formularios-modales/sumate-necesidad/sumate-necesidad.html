@@ -151,15 +151,7 @@
                                             👁
                                         </button>
                                     </td>
-                                    <td class="col-compartir">
-                                        <button *ngIf="tipo_usuario === 1" class="btn-votar-pulse"
-                                            (click)="compartir(item.id_necesidad)">
-                                            Compartir
-                                        </button>
-                                        <app-share-link 
-                                        [url]="'https://aplicaciones2.iecm.mx/repositorio-necesidades-2026-2027/' + item.id_necesidad">
-                                        </app-share-link>
-                                    </td>
+                                    
 
                                 </tr>
                             </tbody>

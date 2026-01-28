@@ -8,7 +8,6 @@ import { Necesidades } from '../../../services/necesidades/necesidades';
 import { ChangeDetectorRef } from '@angular/core';
 import { Catalogos } from '../../../services/catalogos/catalogos';
 import { NuevaNecesidadComponent } from "../nueva-necesidad/nueva-necesidad";
-import { ShareLinkComponent } from "../../share-link/share-link";
 
 @Component({
   selector: 'app-sumate-necesidad',
@@ -17,7 +16,7 @@ import { ShareLinkComponent } from "../../share-link/share-link";
     FormsModule,
     ReactiveFormsModule,
     NuevaNecesidadComponent,
-    ShareLinkComponent],
+  ],
   templateUrl: './sumate-necesidad.html',
   styleUrl: './sumate-necesidad.css',
 })

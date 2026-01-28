@@ -56,4 +56,13 @@ export class Catalogos {
       .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
   }
 
+  getTercerSearchUT(nombre: string): Observable<any> {
+
+    const params = new HttpParams()
+      .set('nombre', nombre)
+
+    return this.http.get(this.apiUrl + '/catalogos/unidadTerritorial', {params})
+      .pipe(catchError((error: HttpErrorResponse) => { return throwError(() => error); }))
+  }
+
 }

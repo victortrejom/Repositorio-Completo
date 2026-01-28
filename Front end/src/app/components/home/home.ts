@@ -1,4 +1,4 @@
-import { Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, ViewChild, AfterViewInit, OnInit, ChangeDetectorRef, Host, HostListener } from '@angular/core';
 import { Modal } from 'bootstrap';
 import { AvisoHome } from '../formularios-modales/aviso-home/aviso-home';
 import { NuevaNecesidadComponent } from '../formularios-modales/nueva-necesidad/nueva-necesidad';
@@ -41,6 +41,8 @@ export class Home implements OnInit {
   showModal = false;
   showModalSumate = false;
 
+  shareOpen: number | null = null;
+
   public videoUrl: SafeResourceUrl;
   public mostrarFrame: boolean = false;
 
@@ -63,9 +65,6 @@ export class Home implements OnInit {
     const usuarioStorage = sessionStorage.getItem('usuario');
     const tipoUsuarioStorage = sessionStorage.getItem('tipo_usuario');
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
-
-
-    console.log("muestra video", video);
 
     this.formularioNewNed = this.formBuilder.group({
       alcaldiar: ['', Validators.required],
@@ -436,5 +435,47 @@ export class Home implements OnInit {
       this.mostrarFrame = true;
     }
   }
+
+  toggleShare(id: number) {
+    this.shareOpen = this.shareOpen === id ? null : id;
+  }
+
+  getShareUrl(id: number): string {
+    return encodeURIComponent(`${window.location.origin}/necesidad/${id}`);
+  }
+
+  shareFacebook(id: number) {
+    window.open(
+      `https://www.facebook.com/sharer/sharer.php?u=${this.getShareUrl(id)}`,
+      '_blank'
+    );
+    this.shareOpen = null;
+
+  }
+
+  shareWhatsapp(id: number) {
+    window.open(
+      `https://wa.me/?text=${this.getShareUrl(id)}`,
+      '_blank'
+    );
+    this.shareOpen = null;
+  }
+
+  shareX(id: number) {
+    window.open(
+      `https://twitter.com/intent/tweet?url=${this.getShareUrl(id)}`,
+      '_blank'
+    );
+    this.shareOpen = null;
+
+  }
+
+  copyLink(id: number) {
+    const url = `${window.location.origin}/necesidad/${id}`;
+    navigator.clipboard.writeText(url).then(() => {
+      alert('Link copiado 📋');
+    });
+  }
+
 
 }

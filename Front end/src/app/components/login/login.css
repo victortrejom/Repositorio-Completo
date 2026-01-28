@@ -316,3 +316,57 @@
   object-fit: cover;
   z-index: -1;
 }
+
+
+
+/* Input estilo buscador */
+.buscador-input {
+  border-radius: 25px;
+  padding-right: 45px;
+}
+
+/* Icono */
+.icono-search {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  pointer-events: none;
+}
+
+/* Dropdown */
+.dropdown-ut {
+  position: absolute;
+  top: 115%;
+  left: 0;
+  width: 100%;
+  background: #e0e0e0;
+  border-radius: 18px;
+  padding: 6px 0;
+  z-index: 9999;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+}
+
+/* Items */
+.item-ut {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 18px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.item-ut:hover {
+  background-color: #d1d1d1;
+}
+
+.item-ut .nombre {
+  font-weight: 500;
+}
+
+.item-ut .alcaldia {
+  font-size: 13px;
+  color: #333;
+}
