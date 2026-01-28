@@ -243,6 +243,4 @@ router.get("/unidadTerritorial", async (req, res) => {
     return res.status(500).json({ message: "Error de servidor", error: error.message });
   }
 });
-
-
 export default router;

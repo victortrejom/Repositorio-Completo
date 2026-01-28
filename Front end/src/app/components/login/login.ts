@@ -11,16 +11,22 @@ import { NgHcaptchaModule } from 'ng-hcaptcha';
 import Swal from 'sweetalert2';
 import * as CryptoJS from 'crypto-js';
 import { Catalogos } from '../../services/catalogos/catalogos';
+import { SumateNecesidad } from '../formularios-modales/sumate-necesidad/sumate-necesidad';
 
 @Component({
   selector: 'app-login',
-  imports: [CommonModule, ReactiveFormsModule, NavbarComponent, ReactiveFormsModule, NgHcaptchaModule],
+  imports: [
+    CommonModule, 
+    ReactiveFormsModule, 
+    NavbarComponent,
+    SumateNecesidad,  
+    NgHcaptchaModule],
   templateUrl: './login.html',
   styleUrls: ['./login.css'],
 })
 export class Login {
 
-
+  showModalSumate = false;
   showModal: boolean = false;
   formulario!: FormGroup;
   formularioLogin!: FormGroup;
@@ -28,6 +34,8 @@ export class Login {
   correo_electronico: string = "";
   password: string = "";
   tipo_usuario: number = 1;
+  idSeleccionadoAlcadia!: number;
+  idSeleccionadoUnidad!: number;
 
   captchaValido = false;
   token = signal<string | undefined>(undefined);
@@ -257,35 +265,29 @@ export class Login {
           this.unidades = [];
         }
       });
-    }, 400);      
-
-    // this.catalogos.getTercerSearchUT(palabra).subscribe({
-    //   next: (data) => {
-    //     console.log("Resultados de la búsqueda de unidad territorial:", data);
-    //   },
-    //   error: (error) => {
-    //     console.error("Error al buscar unidad territorial:", error);
-    //   }
-    // });
-
-    // console.log("Detecto cambios en el input de unidad territorial:", palabra);
-
+    }, 400);
   }
 
   seleccionarUT(ut: any) {
-  const input = document.querySelector('.buscador-input') as HTMLInputElement;
-  input.value = ut.unidad_territorial;
+    this.idSeleccionadoUnidad = ut.id_ut;
+    this.idSeleccionadoAlcadia = ut.id_dt;
+    this.openModalSumate();
+    this.mostrarCatalogo = false;
+    this.unidades = [];
+  }
 
-  this.mostrarCatalogo = false;
-  this.unidades = [];
+  @HostListener('document:click')
+  cerrarCatalogo() {
+    this.mostrarCatalogo = false;
+  }
 
-  console.log('Unidad seleccionada:', ut);
-}
+  openModalSumate() {
+      this.showModalSumate = true;
+      this.mostrarCatalogo = false;
+      this.unidades = [];
+  }
 
-@HostListener('document:click')
-cerrarCatalogo() {
-  this.mostrarCatalogo = false;
-}
-
-
+  closeModalSumate() {
+    this.showModalSumate = false;
+  }
 }

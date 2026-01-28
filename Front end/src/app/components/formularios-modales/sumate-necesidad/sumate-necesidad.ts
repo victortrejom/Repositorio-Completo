@@ -1,11 +1,10 @@
 import { FormGroup, FormsModule, ɵInternalFormsSharedModule, FormBuilder, Validators } from "@angular/forms";
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
+import { ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import Swal from 'sweetalert2';
 import { Modal } from 'bootstrap';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Necesidades } from '../../../services/necesidades/necesidades';
-import { ChangeDetectorRef } from '@angular/core';
 import { Catalogos } from '../../../services/catalogos/catalogos';
 import { NuevaNecesidadComponent } from "../nueva-necesidad/nueva-necesidad";
 import { Router } from "@angular/router";
@@ -21,9 +20,11 @@ import { Router } from "@angular/router";
   templateUrl: './sumate-necesidad.html',
   styleUrl: './sumate-necesidad.css',
 })
-export class SumateNecesidad {
+export class SumateNecesidad implements OnInit, OnChanges {
 
   @Input() isOpen2 = false;
+  @Input() idAlcaldia!: number;
+  @Input() idUnidad!: number;
   @Output() close = new EventEmitter<void>();
 
   constructor(
@@ -32,7 +33,15 @@ export class SumateNecesidad {
     private catalogos: Catalogos,
     private cd: ChangeDetectorRef,
     private formBuilder: FormBuilder,
-  ) {}
+  ) {
+    this.formularioRegistro = this.formBuilder.group({
+      alcaldia: [''],
+      ut: [''],
+      catUno: [''],
+      ordenar: [null],
+      direccion_distrital: [null]
+    });
+  }
 
   formularioRegistro!: FormGroup;
   catalogoAlcaldia: any[] = [];
@@ -61,15 +70,6 @@ export class SumateNecesidad {
     this.direccion_distrital = isNaN(dd) ? null : dd;
     this.usuario = usuarioStorage ? Number(usuarioStorage) : null;
     this.tipo_usuario = tipoUsuarioStorage ? Number(tipoUsuarioStorage) : null;
-
-    this.formularioRegistro = this.formBuilder.group({
-      alcaldia: [''],
-      ut: [''],
-      catUno: [''],
-      ordenar: [null],
-      direccion_distrital: [null]
-    });
-
     this.catalogo_primerCategoria();
     this.catalogo_alcaldia();
 
@@ -231,7 +231,6 @@ export class SumateNecesidad {
     this.showModal = true;
   }
 
-  
   compartir(id_necesidad: number) {
     this.idSeleccionado = id_necesidad;
   }
@@ -316,7 +315,6 @@ export class SumateNecesidad {
     });
   }
 
-
   cancelar() {
     this.close.emit();
   }
@@ -383,22 +381,40 @@ export class SumateNecesidad {
   }
 
   limpiarFiltros() {
-  this.formularioRegistro.patchValue({
-    alcaldia: [''],
-    ut: [''],
-    catUno: [''],
-    ordenar: null
-  });
+    this.formularioRegistro.patchValue({
+      alcaldia: [''],
+      ut: [''],
+      catUno: [''],
+      ordenar: null
+    });
 
-  // Forzar que se ejecute tu change
-  const selectOrdenar: any = document.querySelector('select[formControlName="ordenar"]');
-  if (selectOrdenar) {
-    this.ordenarVotos({ target: selectOrdenar });
+    // Forzar que se ejecute tu change
+    const selectOrdenar: any = document.querySelector('select[formControlName="ordenar"]');
+    if (selectOrdenar) {
+      this.ordenarVotos({ target: selectOrdenar });
+    }
+
+    this.getRegistros();
   }
 
-  this.getRegistros();
-}
+  ngOnChanges(changes: SimpleChanges) {
+    if (!this.formularioRegistro) {
+      return;
+    }
 
+    if (changes['idAlcaldia'] && this.idAlcaldia != null) {
+      this.formularioRegistro.get('alcaldia')?.setValue(this.idAlcaldia);
+      this.cat_all(this.idAlcaldia);
+    }
 
+    if (changes['idUnidad'] && this.idUnidad != null) {
+
+      this.formularioRegistro.patchValue({
+        ut: this.idUnidad
+      });
+    }
+
+    this.cd.detectChanges();
+  }
 
 }

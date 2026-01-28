@@ -1,14 +1,13 @@
 <app-navbar></app-navbar>
 
-    @if(showModalSumate){
-    <app-sumate-necesidad
-        [isOpen2]="showModalSumate"
-        (close)="closeModalSumate()"
-        >
-    </app-sumate-necesidad>
-    }
+@if(showModalSumate){
+  <app-sumate-necesidad
+      [isOpen2]="showModalSumate"
+      (close)="closeModalSumate()"
+      >
+  </app-sumate-necesidad>
+}
 
-    
 <div class="fondo">
 
   <img src="assets/Home.png" class="bg-img" alt="">
@@ -39,5 +38,4 @@
     </button>
 
   </div>
-
 </div>

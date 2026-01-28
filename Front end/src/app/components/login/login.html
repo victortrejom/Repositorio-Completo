@@ -32,16 +32,14 @@
                                 </span>
 
                                 <span class="alcaldia">
-                                    {{ ut.alcaldia || 'Coyoacán' }}
+                                    {{ ut.demarcacion_territorial || 'Sin Registro' }}
                                 </span>
                                 </div>
-
                             </div>
                         </div>
-                        
                     </div>
 
-                    <div class="col-4 text-end">
+                    <div class="col-4 text-end" style="margin-top: -50px; padding: 70px;">
                         <img
                             src="assets/Necesidades.png"
                             class="img-fluid mb-2"
@@ -135,7 +133,6 @@
             <label for="repassword">Vuelve a escribir la contraseña</label>
             <input id="repassword" formControlName="repassword" type="password" placeholder="contraseña">
 
-
             <div class="checkbox-container">
                 <input type="checkbox" id="privacidad" formControlName="privacidad">
                 <label for="privacidad"><span>Acepto el <a class="link-privacidad" href="https://www.iecm.mx/www/transparencia/avisoprivacidad/2025/DEPCyC/SIMPLIFICADO-SDP-IMPCyORC.pdf" target="_blank">Aviso de privacidad</a></span></label>
@@ -156,3 +153,13 @@
         </form>
     </div>
 </div>
+
+  @if(showModalSumate){
+    <app-sumate-necesidad
+        [idAlcaldia]="idSeleccionadoAlcadia"
+        [idUnidad]="idSeleccionadoUnidad" 
+        [isOpen2]="showModalSumate"
+        (close)="closeModalSumate()"
+        >
+    </app-sumate-necesidad>
+  }
