@@ -1,0 +1,9 @@
+.necesidad {
+  width: 55%;
+  object-fit: contain;
+  display: block;
+  position: absolute;
+  top: -9%;       
+  margin-left: 0;  
+  z-index: 1;
+}

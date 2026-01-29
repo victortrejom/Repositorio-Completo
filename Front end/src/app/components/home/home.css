@@ -100,14 +100,8 @@
 }
 
 .boton-imagen {
-  width: 295px;          
-  cursor: pointer;
+  width: 295px;   
   transition: transform 0.2s ease, filter 0.2s ease;
-}
-
-.boton-imagen:hover {
-  transform: scale(1.2);
-  filter: brightness(1.2);
 }
 
 .banner-wrapper {

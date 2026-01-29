@@ -11,81 +11,57 @@
     </div>
 
     <div class="col-8">
-        <form [formGroup]="formularioNewNed!">
-            <div class="imagen-container text-center">
-                <img src="assets/Registross.png" class="boton-imagen">
+      <form [formGroup]="formularioNewNed!">
+         <div class="imagen-container text-center">
+            <img src="assets/Registross.png" class="boton-imagen">
+        </div>
+        <div class="container text-center">
+          <div class="row">
+            <div class="col">
+              <label class="form-label">Título de la necesidad</label>
+              <input type="text"
+                     class="form-control input-transparente"
+                     formControlName="titulo">
             </div>
-            <div class="container text-center">
-                <div class="row">
-                    <div class="col">
-                    <label class="form-label">Título de la necesidad</label>
-                    <input type="text"
-                            class="form-control input-transparente"
-                            formControlName="titulo">
-                    </div>
 
-                    <div class="col">
-                        <label class="form-label me-3">Alcaldía</label>
-                        <select 
-                            class="form-select flex-grow-1 input-transparente"
-                            formControlName="alcaldiar"
-                        s  (change)="onChangeAlcaldia($event)">
-                            <option value="" selected>Seleccione una opción</option>
-                            @for (item of catalogoAlcaldia; track item) {
-                                <option [value]="item.id">{{item.demarcacion_territorial}}</option>
-                            }
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row">
-                    <div class="col">
-                        <label class="card-title form-label col-2">Categoría</label>
-                        
-                        <input type="hidden" formControlName="catUno">
-
-                        <div style="border-radius: 7px;" class="select-box input-transparente" (click)="toggleDropdown()">
-                            {{ selectedLabel || 'Seleccione una opción' }}
-                        </div>
-
-                        <div class="options" *ngIf="dropdownOpen">
-                            @for (item of primerCAt; track item) {
-                                <div class="option" (mouseenter)="onHoverOption(item)" 
-                                    (mouseleave)="clearHoverImage()"(mouseleave)="hoverImage = null"
-                                    (click)="selectOption(item)">
-                    
-                                    {{ item.primera_categoria }}
-                                </div>
-                            }
-                        </div>
-                
-                        <a class="link-categorias" href="#" (click)="$event.preventDefault(); descargarCategorias()">
-                            Conoce el catálogo de categorías
-                        </a>
-                    </div>
-
-                    <div class="col d-flex justify-content-center align-items-center">
-                        <div class="container text-center">
-                            <div class="row" style="position: relative;">
-                            <div class="col-8 position-relative">
-                                <div *ngIf="hoverImage" class="preview-floating">
-                                <img [src]="hoverImage">
-                                </div>
-                            </div>
-                            <div class="col-4 d-flex justify-content-center align-items-center">
-                                <button type="button"
-                                        (click)="openModal()"
-                                        class="mst-4 btn-aceptar">
-                                Continuar
-                                </button>
-                            </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="col">
+                <label class="form-label me-3">Alcaldía</label>
+                <select 
+                    class="form-select flex-grow-1 input-transparente"
+                    formControlName="alcaldiar"
+                    (change)="onChangeAlcaldia($event)">
+                    <option value="" selected>Seleccione una opción</option>
+                    @for (item of catalogoAlcaldia; track item) {
+                    <option [value]="item.id">{{item.demarcacion_territorial}}</option>
+                    }
+                </select>
             </div>
-        </form>
+          </div>
+
+          <div class="row">
+            <div class="col">
+                <label class="card-title form-label col-2">Categoría</label>
+                <select class="form-select input-transparente flex-grow-1" formControlName="catUno"
+                    (change)="onChangeCat($event)">
+                    <option value="" selected>Seleccione una opción</option>
+                    @for (item of primerCAt; track item) {
+                    <option [value]="item.id">{{item.primera_categoria}}</option>
+                    }
+                </select>
+            </div>
+
+            <div class="col d-flex justify-content-center align-items-center">
+              <button type="button"
+                      (click)="openModal()"
+                      class="mt-4 btn-aceptar">
+                Continuar
+              </button>
+            </div>
+          </div>
+        </div>
+      </form>
     </div>
+
     <div class="col-2"></div>
   </div>
 </div>
@@ -93,7 +69,7 @@
 <div class="fondo">
   <div class="banner-wrapper">
     <section class="banner-oscuro active">
-        <div class="imagen-container">
+         <div class="imagen-container">
             <img src="assets/SumateNecesidad2.png" class="boton-imagen">
         </div>
       <div class="banner-inner">
@@ -105,6 +81,18 @@
                 <div style="text-align: right; cursor: pointer;" (click)="abrirFrame()">
                 ¿Cómo funciona el muro?
                 </div>
+                @if (mostrarFrame) {
+                            <div class="video-overlay" (click)="cerrarFrame()">
+                                <div class="video-wrapper" (click)="$event.stopPropagation()">
+                                <iframe
+                                    [src]="videoUrl"
+                                    frameborder="0"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+                                </div>
+                            </div>
+                            }
 
               <!-- FILTROS -->
               <div class="row g-3 filtros-row">
@@ -226,7 +214,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <div class="pagination">
+                    <div class="pagination">
                         <button (click)="prevPage()" [disabled]="currentPage === 1">
                             ⬅ Anterior
                         </button>
