@@ -218,8 +218,6 @@ router.get("/unidadTerritorial", async (req, res) => {
   
   const { nombre } = req.query;
 
-  console.log("nombre", nombre)
-
     try {
     const pool = await connectToDatabase();
     const result = await pool.request()
